@@ -1,0 +1,5 @@
+This is patch directory
+
+cd WORKING_DIR
+sh device/mediatek/mt6795/patches/install.sh
+sh device/mediatek/mt6795/patches/uninstall.sh

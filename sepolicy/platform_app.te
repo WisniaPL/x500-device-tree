@@ -277,7 +277,5 @@ allow platform_app mtk_mwblacklist_service:service_manager find;
 allow platform_app goodixfingerprintd_device:chr_file rw_file_perms;
 allow platform_app goodixfingerprintd:binder { call transfer };
 allow platform_app mobicore_device:chr_file rw_file_perms;
-allow platform_app goodixfingerprintd_service:service_manager find;
-allow platform_app McDriverDeamon_device:chr_file rw_file_perms;;
 
 

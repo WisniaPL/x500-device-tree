@@ -205,9 +205,13 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio_param/AudioParamOptions.xml:system/etc/audio_param/AudioParamOptions.xml
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/permissions/platform.xml:system/etc/permissions/platform.xml \
+    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
     $(LOCAL_PATH)/configs/permissions/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
     $(LOCAL_PATH)/configs/permissions/android.hardware.microphone.xml:system/etc/permissions/android.hardware.microphone.xml \
-    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml
+    $(LOCAL_PATH)/configs/permissions/com.android.location.provider.xml:system/etc/permissions/com.android.location.provider.xml \
+    $(LOCAL_PATH)/configs/permissions/com.android.media.remotedisplay.xml:system/etc/permissions/com.android.media.remotedisplay.xml \
+    $(LOCAL_PATH)/configs/permissions/com.android.mediadrm.signer.xml:system/etc/permissions/com.android.mediadrm.signer.xml \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
@@ -259,24 +263,6 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/agps_profiles_conf2.xml:system/etc/agps_profiles_conf2.xml
     
-#FMRadio
-PRODUCT_PACKAGES += \
-    FMRadio \
-    libfmcust \
-    libfmjni \
-    libfmmt6620 \
-    libfmmt6627 \
-    libfmmt6628 \
-    libfmmt6630 \
-    libmtkplayer
-
-# Set default player to AwesomePlayer
-PRODUCT_PROPERTY_OVERRIDES += \
-    persist.sys.media.use-awesome=true
-# Fingerprint
-PRODUCT_PACKAGES += \
-    fingerprintd
-
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml
     
@@ -293,10 +279,36 @@ $(call add-product-dex-preopt-module-config,com.cyanogenmod.keyhandler,disable)
 SIM_COUNT := 2
 PRODUCT_PROPERTY_OVERRIDES += ro.telephony.sim.count=$(SIM_COUNT)
 
-# Include IMSEnabler
 PRODUCT_PACKAGES += \
-IMSEnabler
+      libgui_shim \
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
+    $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
+    $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/permissions/media_codecs.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_audio.xml:system/etc/media_codecs_mediatek_audio.xml\
+    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_video.xml:system/etc/media_codecs_mediatek_video.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
+    $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml
 
 PRODUCT_PACKAGES += \
-      libgui_shim
-   
+   libxlog \
+   libstlport
+
+# Hack to fix asec on emulated sdcard
+PRODUCT_PACKAGES += \
+    asec_helper
+
+# Sensor Calibration
+PRODUCT_PACKAGES += libem_sensor_jni
+
+PRODUCT_PACKAGES += \
+    mtkcam \
+
+# Include IMSEnabler
+PRODUCT_PACKAGES += \
+    IMSEnabler

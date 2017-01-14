@@ -13,46 +13,17 @@ allow fingerprintd fuse:file create_file_perms;
 # ==============================================
 # Policy File of /system/bin/goodixfingerprintd Executable File
 
-
-# Type Declaration
-type goodixfingerprintd, domain;
-type goodixfingerprintd_exec, exec_type, file_type;
-
 # ==============================================
 # MTK Policy Rule
 # ==============================================
-
-# goodix fingerprintd
-init_daemon_domain(goodixfingerprintd)
-binder_use(goodixfingerprintd)
-
-# Sllow goodix to read lib files
-allow goodixfingerprintd goodixfingerprintd_lib_file:file r_file_perms;
-
-# Allow HAL module to create files
-allow goodixfingerprintd goodixfingerprintd_data_file:file { create_file_perms };
-
-# Give HAL module R/W permissions contents of data dir
-allow goodixfingerprintd goodixfingerprintd_data_file:dir rw_dir_perms;
-
-# Allow goodix to R/W device
-allow goodixfingerprintd goodixfingerprintd_device:chr_file { read write ioctl open };
-
-# Need to add auth tokens to KeyStore
-use_keystore(goodixfingerprintd)
-allow goodixfingerprintd keystore:keystore_key { add_auth };
-
 # Permissions check
 binder_call(goodixfingerprintd, system_server);
 allow goodixfingerprintd permission_service:service_manager find;
 
 # Give permissions to create directories
-allow fingerprintd fingerprintd_data_file:dir create_dir_perms;
 allow goodixfingerprintd goodixfingerprintd_data_file:dir create_dir_perms;
-
 allow fingerprintd goodixfingerprintd:binder { call transfer };
 allow fingerprintd McDriverDaemon_device:chr_file rw_file_perms;
 allow fingerprintd mobicore_device:chr_file rw_file_perms;
 allow fingerprintd tee_device:chr_file rw_file_perms;
 
-# Added by DroidThug

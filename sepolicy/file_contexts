@@ -513,39 +513,6 @@
 /dev/block/platform/mtk-msdc\.0/[0-9]+\.MSDC0/by-name/persist           u:object_r:persist_block_device:s0
 /dev/block/platform/mtk-msdc\.0/[0-9]+\.MSDC0/by-name/system            u:object_r:system_block_device:s0
 
-# secblock @Bule 20161119
-/dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/security      u:object_r:secblock_device:s0
-/dev/block/mmcblk0p13    u:object_r:secblock_device:s0
-
-# Camera @Bule 20161119
-/dev/LC898217AF(/.*)? u:object_r:LC898217AF_device:s0
-/dev/LC898122OFILMAF(/.*)? u:object_r:LC898122OFILMAF_device:s0
-/dev/CAM_CAL_DRV_SHARP(/.*)? u:object_r:CAM_CAL_DRV_SHARP_device:s0
-/dev/CAM_CAL_DRV_OFILM(/.*)? u:object_r:CAM_CAL_DRV_OFILM_device:s0
-/dev/CAM_CAL_DRV_3L8(/.*)? u:object_r:CAM_CAL_DRV_3L8_device:s0
-/dev/CAM_CAL_DRV_3L9(/.*)? u:object_r:CAM_CAL_DRV_3L9_device:s0
-
-# Sensor @Bule 20161119
-/system/bin/mxg2320d u:object_r:mxg2320d_exec:s0
-/data/mxg2320(/.*)?         u:object_r:mxg2320_data_file:s0
-/data/mmc3524x(/.*)?         u:object_r:mmc3524x_data_file:s0
-
-#For Goodix fingerprint @Bule 20161119
-/dev/gf66xx-spi     u:object_r:gx_fpd_device:s0
-/dev/ttyACM[0-9]*   u:object_r:gx_fpd_device:s0
-/dev/goodix_fp*     u:object_r:gx_fpd_device:s0
-
-/system/bin/goodixfingerprintd u:object_r:gx_fpd_exec:s0
-
-# Goodix Fingerprint data @Bule 20161119
-/data/system/fingerprint(/.*)?    u:object_r:gx_fpd_data_file:s0
-/persist/data/gxfp(/.*)?		  u:object_r:gx_fpd_data_file:s0
-
-# Tap-to-Wake @Bule 20161123
-/sys/bus/i2c/devices/i2c-2/2-004b/wake_gesture_enable               u:object_r:sysfs_dt2w:s0
-
-# Vibrator intensity @Bule 20161202
-/sys/class/timed_output/vibrator/level u:object_r:sysfs_vibrator:s0
 #######################################
 ####### Added by DroidThug ############
 #######################################
@@ -559,7 +526,6 @@
 # Device files
 /dev/goodix_fp                 u:object_r:goodixfingerprintd_device:s0
 /dev/ttyACM[0-9]* u:object_r:goodixfingerprintd_device:s0 
-/data/system/fingerprint(/.*)?    u:object_r:gx_fpd_data_file:s0
 
 # Goodix librarires
 /system/lib64/libgf_hal.so u:object_r:goodixfingerprintd_lib_file:s0

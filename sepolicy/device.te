@@ -190,6 +190,5 @@ type goodixfingerprintd_device, dev_type, mlstrustedobject;
 type goodix_fp_device, dev_type;
 type mobicore_device, dev_type;
 type mobicore-user_device, dev_type;
-type tee_device, dev_type;
 type McDriverDaemon_device, dev_type;
 
