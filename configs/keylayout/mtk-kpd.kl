@@ -9,7 +9,7 @@ key 8     7
 key 9     8
 key 10    9
 key 11    0
-key 158   BACK
+key 158   BACK              
 key 230   SOFT_RIGHT
 key 60    SOFT_RIGHT
 key 107   ENDCALL           WAKE
@@ -35,6 +35,9 @@ key 113   MUTE              WAKE_DROPPED
 key 116   POWER             WAKE
 key 212   CAMERA
 key 211   FOCUS
+key 172   HOME		    
+key 580   APP_SWITCH	    
+
 
 key 16    Q
 key 17    W

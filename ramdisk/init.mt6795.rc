@@ -1,16 +1,16 @@
 # MTK platform .rc configure
 
 import init.project.rc
-import /FWUpgradeInit.rc
+
 import init.xlog.rc
-import init.aee.rc
-import init.fon.rc
+
+
 import init.volte.rc
 import init.mal.rc
 import init.trustonic.rc
-import init.common_svc.rc
+
 import init.ssd.rc
-	
+import init.modem.rc	
 
 # init.modem.rc must be the LAST rc file because vold.post_fs_data_done is set in it
 # import init.modem.rc
@@ -808,7 +808,7 @@ on property:debug.MB.prdebug=0
 service met_log_d /system/bin/met_log_d
     class main
 
-service bugreport /system/bin/dumpstate -d -p -B \
+service bugreport /system/bin/dumpstate -d -p -B -q\
         -o /data/data/com.android.shell/files/bugreports/bugreport
 	class main
 	disabled
@@ -1105,33 +1105,7 @@ service bluetoothd /system/bin/bluetoothd -n
     # let bluetoothd drop uid to bluetooth with the right linux capabilities
     group bluetooth net_bt_admin misc
     disabled
-#
-#  Thermal start
-#
-# Powersave
-on property:sys.perf.profile=0
-    start normalmode
-# Balanced
-on property:sys.perf.profile=1
-    start normalmode
-# Perfomance
-on property:sys.perf.profile=2
-    start perfmode 
 
-service perfmode /system/bin/thermal_manager  /system/etc/.tp/thermal.off.conf
-    user root
-    group root
-    oneshot
-    disabled
-
-service normalmode /system/bin/thermal_manager  /system/etc/.tp/thermal.conf
-    user root
-    group root
-    oneshot
-    disabled
-#
-#  Thermal end	
-#
 #
 #  External Modme control related services
 #

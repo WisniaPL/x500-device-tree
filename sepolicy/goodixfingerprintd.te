@@ -147,9 +147,18 @@ allow goodixfingerprintd system_data_file:file { open};
 # allow TEE
 allow goodixfingerprintd tee_device:chr_file { open read ioctl write };
 allow goodixfingerprintd mobicore_device:chr_file { open read ioctl write };
-allow goodixfingerprintd mobicore-user_device:chr_file { open read ioctl write };
+allow goodixfingerprintd mobicore_tui_device:chr_file { open read ioctl write };
 allow goodixfingerprintd mobicore_user_device:chr_file { open read ioctl write };
 allow goodixfingerprintd self:netlink_socket read;
 allow goodixfingerprintd goodixfingerprintd:netlink_socket read;
-
+allow goodixfingerprintd storage_file:dir create_dir_perms;
+allow goodixfingerprintd storage_file:lnk_file create_file_perms;
+allow goodixfingerprintd tee_device:chr_file { rw_file_perms };
+#
+allow goodixfingerprintd mobicore_data_file:file create_file_perms;
+allow goodixfingerprintd mobicore_data_file:chr_file { rw_file_perms setattr };
+r_dir_file(goodixfingerprintd, mobicore_data_file)
+allow goodixfingerprintd mobicore_data_file:dir create_dir_perms;
+allow goodixfingerprintd mobicore_data_file:dir ra_dir_perms;
+allow goodixfingerprintd mobicore_data_file:chr_file { open read ioctl write };
 

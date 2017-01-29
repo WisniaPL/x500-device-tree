@@ -7,10 +7,10 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
 $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 
 # Dalvik heap configurations
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxxhdpi-3072-dalvik-heap.mk)
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-3072-dalvik-heap.mk)
 
 # Call hwui memory config
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxxhdpi-3072-hwui-memory.mk)
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-3072-hwui-memory.mk)
 
 # The gps config appropriate for this device
 $(call inherit-product, device/common/gps/gps_us_supl.mk)
@@ -29,11 +29,7 @@ PRODUCT_AAPT_CONFIG := normal xxhdpi
 PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 
 # Recovery allowed devices
-TARGET_OTA_ASSERT_DEVICE := mt6795,X500,X507,X509,X3,x500
-
-#App YGPS
-PRODUCT_PACKAGES += \
-    YGPS
+TARGET_OTA_ASSERT_DEVICE := x3,X500,X507,X509,X3,x500,x507,x509,X502,x502
 
 # Power
 PRODUCT_PACKAGES += \
@@ -70,7 +66,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     persist.sys.usb.config=mtp \
     ro.mount.fs=EXT4 \
     camera.disable_zsl_mode=1 \
-    persist.sys.timezone=Europe/Moscow
+    persist.sys.timezone=Europe/Warsaw
 
 # PRODUCT_PROPERTY_OVERRIDES
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -89,7 +85,8 @@ PRODUCT_PACKAGES += \
     libaudio-resampler \
     libaudiopolicymanagerdefault \
     libtinycompress \
-    libtinyxml
+    libtinyxml \
+    tinymix
 
 # Wifi
 PRODUCT_PACKAGES += \
@@ -109,9 +106,6 @@ PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
-# ANT Permissions
-PRODUCT_COPY_FILES += \
-    external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:system/etc/permissions/com.dsi.ant.antradio_library.xml
 
 # Filesystem management tools
 PRODUCT_PACKAGES += \
@@ -123,7 +117,6 @@ PRODUCT_PACKAGES += \
     resize2fs \
     setup_fs \
     ext4_resize \
-    resize_ext4 \
     superumount 
 
 PRODUCT_TAGS += dalvik.gc.type-precise
@@ -139,22 +132,18 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/factory_init.project.rc:root/factory_init.project.rc \
     $(LOCAL_PATH)/ramdisk/factory_init.rc:root/factory_init.rc \
     $(LOCAL_PATH)/ramdisk/fstab.mt6795:root/fstab.mt6795 \
-    $(LOCAL_PATH)/ramdisk/init.aee.rc:root/init.aee.rc \
     $(LOCAL_PATH)/ramdisk/init.modem.rc:root/init.modem.rc \
     $(LOCAL_PATH)/ramdisk/init.mt6795.rc:root/init.mt6795.rc \
     $(LOCAL_PATH)/ramdisk/init.mt6795.usb.rc:root/init.mt6795.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.project.rc:root/init.project.rc \
     $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
     $(LOCAL_PATH)/ramdisk/init.xlog.rc:root/init.xlog.rc \
-    $(LOCAL_PATH)/ramdisk/meta_init.modem.rc:root/meta_init.modem.rc \
-    $(LOCAL_PATH)/ramdisk/meta_init.project.rc:root/meta_init.project.rc \
-    $(LOCAL_PATH)/ramdisk/meta_init.rc:root/meta_init.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.mt6795.rc:root/ueventd.mt6795.rc \
     $(LOCAL_PATH)/ramdisk/init.volte.rc:root/init.volte.rc \
     $(LOCAL_PATH)/ramdisk/init.mal.rc:root/init.mal.rc \
-    $(LOCAL_PATH)/ramdisk/init.ssd.rc:root/init.ssd.rc \
-    $(LOCAL_PATH)/ramdisk/init.performance.rc:root/init.performance.rc \
+    $(LOCAL_PATH)/ramdisk/init.usb.configfs:root/init.usb.configfs.rc \
     $(LOCAL_PATH)/ramdisk/init.trustonic.rc:root/init.trustonic.rc \
+
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml \
@@ -207,11 +196,13 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/permissions/platform.xml:system/etc/permissions/platform.xml \
     $(LOCAL_PATH)/configs/permissions/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
-    $(LOCAL_PATH)/configs/permissions/android.hardware.consumerir.xml:system/etc/permissions/android.hardware.consumerir.xml \
     $(LOCAL_PATH)/configs/permissions/android.hardware.microphone.xml:system/etc/permissions/android.hardware.microphone.xml \
     $(LOCAL_PATH)/configs/permissions/com.android.location.provider.xml:system/etc/permissions/com.android.location.provider.xml \
     $(LOCAL_PATH)/configs/permissions/com.android.media.remotedisplay.xml:system/etc/permissions/com.android.media.remotedisplay.xml \
     $(LOCAL_PATH)/configs/permissions/com.android.mediadrm.signer.xml:system/etc/permissions/com.android.mediadrm.signer.xml \
+    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.manual_postprocessing.xml:system/etc/permissions/android.hardware.camera.manual_postprocessing.xml \
+    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.manual_sensor.xml:system/etc/permissions/android.hardware.camera.manual_sensor.xml \
+    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml \
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
@@ -230,8 +221,10 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/keylayout/mtk-kpd.kl:system/usr/keylayout/mtk-kpd.kl \
     $(LOCAL_PATH)/configs/keylayout/ACCDET.kl:system/usr/keylayout/ACCDET.kl\
+    $(LOCAL_PATH)/configs/keylayout/mtk-tpd.kl:system/usr/keylayout/mtk-tpd.kl\
+    $(LOCAL_PATH)/configs/keylayout/synaptics_dsx_i2c.kl:system/usr/keylayout/synaptics_dsx_i2c.kl\
     $(LOCAL_PATH)/configs/keylayout/AVRCP.kl:system/usr/keylayout/AVRCP.kl
-
+    
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/ril_conf/apns-conf.xml:system/etc/apns-conf.xml \
     $(LOCAL_PATH)/configs/ril_conf/ecc_list.xml:system/etc/ecc_list.xml \
@@ -247,12 +240,18 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/dhcpcd/dhcpcd-run-hooks:system/etc/dhcpcd/dhcpcd-run-hooks \
     $(LOCAL_PATH)/configs/dhcpcd/dhcpcd-hooks/20-dns.conf:system/etc/dhcpcd/dhcpcd-hooks/20-dns.conf \
-    $(LOCAL_PATH)/configs/dhcpcd/dhcpcd-hooks/95-configured:system/etc/dhcpcd/dhcpcd-hooks/95-configured
+    $(LOCAL_PATH)/configs/dhcpcd/dhcpcd-hooks/95-configured:system/etc/dhcpcd/dhcpcd-hooks/95-configured \
+    $(LOCAL_PATH)/configs/wide-dhcpv6/dhcp6c.conf:system/etc/wide-dhcpv6/dhcp6c.conf \
+    $(LOCAL_PATH)/configs/wide-dhcpv6/dhcp6c.script:system/etc/wide-dhcpv6/dhcp6c.script \
+    $(LOCAL_PATH)/configs/wide-dhcpv6/dhcp6cctlkey:system/etc/wide-dhcpv6/dhcp6cctlkey \
+    $(LOCAL_PATH)/configs/wide-dhcpv6/dhcp6cDNS.conf:system/etc/wide-dhcpv6/dhcp6cDNS.conf \
+    $(LOCAL_PATH)/configs/wide-dhcpv6/dhcp6s.conf:system/etc/wide-dhcpv6/dhcp6s.conf 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/radvd/radvd.conf:system/etc/radvd/radvd.conf
 
 PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/slp_conf:system/etc/slp_conf \
     $(LOCAL_PATH)/configs/clatd.conf:system/etc/clatd.conf \
     $(LOCAL_PATH)/configs/custom.conf:system/etc/custom.conf \
     $(LOCAL_PATH)/configs/mtklog-config.prop:system/etc/mtklog-config.prop \
@@ -266,21 +265,11 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml
     
-# Keyhandler
-PRODUCT_PACKAGES += \
-    com.cyanogenmod.keyhandler
 
-PRODUCT_SYSTEM_SERVER_JARS += com.cyanogenmod.keyhandler
-
-# Never dexopt the keyhandler
-$(call add-product-dex-preopt-module-config,com.cyanogenmod.keyhandler,disable)
-
-# Telephony
+# set Telephony property - SIM count
 SIM_COUNT := 2
 PRODUCT_PROPERTY_OVERRIDES += ro.telephony.sim.count=$(SIM_COUNT)
-
-PRODUCT_PACKAGES += \
-      libgui_shim \
+PRODUCT_PROPERTY_OVERRIDES += persist.radio.default.sim=0
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
@@ -293,22 +282,39 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/media/media_codecs_mediatek_audio.xml:system/etc/media_codecs_mediatek_audio.xml\
     $(LOCAL_PATH)/configs/media/media_codecs_mediatek_video.xml:system/etc/media_codecs_mediatek_video.xml \
     $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml
+    $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/mtk_clear_motion.cfg:system/etc/mtk_clear_motion.cfg
 
 PRODUCT_PACKAGES += \
    libxlog \
    libstlport
 
-# Hack to fix asec on emulated sdcard
-PRODUCT_PACKAGES += \
-    asec_helper
-
 # Sensor Calibration
 PRODUCT_PACKAGES += libem_sensor_jni
-
-PRODUCT_PACKAGES += \
-    mtkcam \
 
 # Include IMSEnabler
 PRODUCT_PACKAGES += \
     IMSEnabler
+ 
+#App YGPS
+PRODUCT_PACKAGES += \
+    YGPS
+
+# Keyhandler
+PRODUCT_PACKAGES += \
+    com.cyanogenmod.keyhandler
+
+PRODUCT_SYSTEM_SERVER_JARS += com.cyanogenmod.keyhandler
+
+# Never dexopt the keyhandler
+$(call add-product-dex-preopt-module-config,com.cyanogenmod.keyhandler,disable)
+
+# ANT+
+PRODUCT_PACKAGES += \
+    AntHalService \
+    com.dsi.ant.antradio_library \
+    libantradio
+
+PRODUCT_COPY_FILES += \
+    external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:system/etc/permissions/com.dsi.ant.antradio_library.xml
+

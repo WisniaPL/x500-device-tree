@@ -22,7 +22,7 @@
     <bool name="config_animateScreenLights">true</bool>
 
     <!-- Remote server that can provide NTP responses. -->
-    <string translatable="false" name="config_ntpServer">asia.pool.ntp.org</string>
+    <string translatable="false" name="config_ntpServer">europe.pool.ntp.org</string>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->
@@ -164,7 +164,18 @@
     <!-- Default value for led color when battery is fully charged -->
     <integer name="config_notificationsBatteryFullARGB">0xff00ff00</integer>   
    
+    <!-- Default LED on time for notification LED in milliseconds. -->
+    <integer name="config_defaultNotificationLedOn">500</integer>
+
+    <!-- Default LED off time for notification LED in milliseconds. -->
+    <integer name="config_defaultNotificationLedOff">4000</integer>
+    
     <bool name="config_automatic_brightness_available">true</bool>
+    
+      <!-- Do the battery/notification LEDs support pulsing?
+         Used to decide if we show pulse settings -->
+    <bool name="config_ledCanPulse">true</bool>
+  
 
     <integer-array name="config_autoBrightnessLevels">
         <item>128</item>
@@ -351,7 +362,7 @@
             64 - Volume rocker
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
-    <integer name="config_deviceHardwareKeys">71</integer>
+    <integer name="config_deviceHardwareKeys">83</integer>
 
     <!-- Hardware keys present on the device with the ability to wake, stored as a bit field.
          This integer should equal the sum of the corresponding value for each
@@ -365,7 +376,7 @@
             64 - Volume rocker
          For example, a device with Home, Back and Menu keys would set this
          config to 7. -->
-    <integer name="config_deviceHardwareWakeKeys">64</integer>
+    <integer name="config_deviceHardwareWakeKeys">83</integer>
 
     <!-- Is the device capable of hot swapping an UICC Card -->
     <bool name="config_hotswapCapable">true</bool>
@@ -427,4 +438,12 @@
      true will use SystemClock.elapsedRealtimeNanos() to set timestamp. -->
     <bool name="config_useSystemClockforRotationSensor">true</bool>
 
+<!-- The list absolute paths of jar/apk files containing the device specific handlers,
+         delimited by File.pathSeparator, which defaults to ":" on Android -->
+    <string name="config_deviceKeyHandlerLib" translatable="false">/system/framework/com.cyanogenmod.keyhandler.jar</string>
+
+    <!-- Full qualified name of the class that implements
+         com.android.internal.os.DeviceKeyHandler interface. -->
+    <string name="config_deviceKeyHandlerClass" translatable="false">com.cyanogenmod.settings.device.KeyHandler</string>
+  
 </resources>

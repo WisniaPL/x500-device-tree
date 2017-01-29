@@ -12,6 +12,7 @@
 /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/nvram     0660    root    system
 /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/para      0660    root    system
 /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/frp       0660    root    system
+/dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/security  0660    root    system
 # Connectivity
 /dev/stpwmt               0660   system     system
 /dev/wmtdetect            0660   system     system
@@ -83,14 +84,6 @@
 /sys/devices/platform/leds-mt65xx/leds/red   delay_off      0664  system   system
 /sys/devices/platform/leds-mt65xx/leds/blue   delay_on      0664  system   system
 /sys/devices/platform/leds-mt65xx/leds/blue   delay_off      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/yellow   delay_on      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/yellow   delay_off      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/white   delay_on      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/white   delay_off      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/cyan   delay_on      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/cyan   delay_off      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/violet   delay_on      0664  system   system
-/sys/devices/platform/leds-mt65xx/leds/violet   delay_off      0664  system   system
 
 #GPIO
 /dev/mtgpio               0600   radio      root
@@ -117,7 +110,12 @@
 #MTK In-House TEE
 /dev/ttyACM0              0660   radio      radio
 
-#Add Fingerprint 
+#Add Wake Gestures @Bule 20161119
+/sys/android_touch/*       0664  system   system
+
+#Add Fingerprint @Bule 20161119
 /dev/goodix_fp              0660   root       system
 
+#Add Wake Gestures @Bule 20161123
+/sys/bus/i2c/devices/i2c-2/2-004b/*       0664  system   system
 

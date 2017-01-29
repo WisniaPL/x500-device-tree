@@ -2,7 +2,7 @@ import /init.environ.rc
 import init.fon.rc
 import init.trustonic.rc
 import init.nvdata.rc
-import init.ssd.rc
+
 
 
 on early-init

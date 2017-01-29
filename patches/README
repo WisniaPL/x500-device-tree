@@ -1,5 +1,5 @@
 This is patch directory
 
 cd WORKING_DIR
-sh device/mediatek/mt6795/patches/install.sh
-sh device/mediatek/mt6795/patches/uninstall.sh
+sh device/LeTV/x500/patches/install.sh
+sh device/LeTV/x500/patches/uninstall.sh

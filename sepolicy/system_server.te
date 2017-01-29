@@ -275,3 +275,4 @@ allow system_server goodixfingerprintd_device:chr_file rw_file_perms;
 binder_call(system_server,goodixfingerprintd)
 allow system_server McDriverDaemon_device:chr_file rw_file_perms;
 allow system_server tee_device:chr_file r_file_perms;
+

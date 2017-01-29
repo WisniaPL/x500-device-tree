@@ -191,4 +191,12 @@ type goodix_fp_device, dev_type;
 type mobicore_device, dev_type;
 type mobicore-user_device, dev_type;
 type McDriverDaemon_device, dev_type;
-
+type LC898217AF_device, dev_type;
+type LC898122OFILMAF_device, dev_type;
+type CAM_CAL_DRV_SHARP_device, dev_type;
+type CAM_CAL_DRV_OFILM_device, dev_type;
+type CAM_CAL_DRV_3L8_device, dev_type;
+type CAM_CAL_DRV_3L9_device, dev_type;
+type secblock_device, dev_type;
+type fingerprint_device, dev_type;
+type teei_rpmb_device, dev_type;
