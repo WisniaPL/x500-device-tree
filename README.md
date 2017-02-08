@@ -1,8 +1,8 @@
 # x500-device-tree
 echo "export USE_CCACHE=1" >> ~/.bashrc
-~/aosp/prebuilts/misc/linux-x86/ccache/ccache -M 45G
+~/lineage/prebuilts/misc/linux-x86/ccache/ccache -M 45G
 . build/envsetup.sh
-lunch aosp_x500-userdebug
+lunch lineage_x500-userdebug
 make -j16
 
 sh device/LeTV/x500/patches/install.sh
