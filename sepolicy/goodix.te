@@ -115,9 +115,6 @@ allow goodix goodixfingerprintd_lib_file:file { create_file_perms getattr read }
 allow goodix goodixfingerprintd_lib_file:chr_file { rw_file_perms setattr };
 allow goodix goodixfingerprintd_lib_file:dir ra_dir_perms;
 
-# allow system_file
-allow goodix system_file:file { rx_file_perms execmod };
-
 # Need to add auth tokens to KeyStore
 use_keystore(goodixfingerprintd)
 allow goodix keystore:keystore_key { add_auth };

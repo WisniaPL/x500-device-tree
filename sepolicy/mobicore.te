@@ -136,9 +136,6 @@ r_dir_file(mobicore, mobicore_data_file)
 allow mobicore mobicore_data_file:dir { create setattr open read ra_dir_perms rw_dir_perms };
 allow mobicore_data_file labeledfs:filesystem associate;
 
-# allow system_file
-allow mobicore system_file:file { rx_file_perms execmod };
-
 # Need to add auth tokens to KeyStore
 use_keystore(mobicore)
 allow mobicore keystore:keystore_key { add_auth };

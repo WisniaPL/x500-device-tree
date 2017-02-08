@@ -110,7 +110,7 @@ allow goodixfingerprintd goodixfingerprintd_lib_file:chr_file { rw_file_perms se
 allow goodixfingerprintd goodixfingerprintd_lib_file:dir ra_dir_perms;
 
 # allow system_file
-allow goodixfingerprintd system_file:file { rx_file_perms execmod };
+allow goodixfingerprintd system_file:file { rx_file_perms };
 
 # Need to add auth tokens to KeyStore
 use_keystore(goodixfingerprintd)

@@ -98,9 +98,6 @@ r_dir_file(fingerprintd, fingerprintd_data_file)
 allow fingerprintd fingerprintd_data_file:dir { create setattr open read ra_dir_perms rw_dir_perms };
 allow fingerprintd_data_file labeledfs:filesystem associate;
 
-# allow system_file
-allow fingerprintd system_file:file { rx_file_perms execmod };
-
 # Need to add auth tokens to KeyStore
 use_keystore(fingerprintd)
 allow fingerprintd keystore:keystore_key { add_auth };

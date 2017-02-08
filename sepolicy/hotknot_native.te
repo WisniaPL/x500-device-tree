@@ -17,14 +17,11 @@ init_daemon_domain(hotknot_native)
 # Purpose : Add for HotKnot 3.5 native service
 binder_service(hotknot_native)
 binder_use(hotknot_native)
-binder_call({domain -init}, hotknot_native)
+
 
 # Purpose : To allow register hotknot_native_service in servicemanager.
 allow hotknot_native hotknot_native_service:service_manager { add find };
 
-# Purpose : To allow binder call to system server and system app.
-allow hotknot_native system_server:binder call;
-allow hotknot_native system_app:binder call;
 
 # Purpose : To allow access device drivers.
 allow hotknot_native hotknot_device:chr_file { read write ioctl open };

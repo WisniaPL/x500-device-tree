@@ -33,10 +33,8 @@ allow recovery logo_device:chr_file *;
 allow recovery preloader_device:chr_file *;
 allow recovery uboot_device:chr_file *;
 allow recovery init:dir *;
-allow recovery init:file ~{ execute entrypoint };
 allow recovery init:lnk_file *;
 allow recovery kernel:dir *;
-allow recovery kernel:file ~{ execute entrypoint };
 allow recovery kernel:lnk_file *;
 
 
@@ -44,11 +42,9 @@ allow recovery kernel:lnk_file *;
 # Operation : Migration 
 # Purpose : Block full update
 allow recovery healthd:dir *;
-allow recovery healthd:file ~{ execute entrypoint };
 allow recovery healthd:lnk_file *;
 dontaudit recovery self:capability sys_ptrace;
 allow recovery ueventd:dir *;
-allow recovery ueventd:file ~{ execute entrypoint };
 allow recovery ueventd:lnk_file *;
 
 # Date : WK14.42
@@ -65,7 +61,6 @@ allow recovery ueventd:lnk_file *;
 
 userdebug_or_eng(`
   allow recovery su:dir *;
-  allow recovery su:file *;
   allow recovery su:lnk_file *;
 ')
 

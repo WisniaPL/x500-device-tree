@@ -15,8 +15,8 @@ init_daemon_domain(guiext-server)
 # for bqdump and conversion pool
 binder_service(guiext-server)
 binder_use(guiext-server)
-binder_call({domain -init}, guiext-server)
-binder_call(guiext-server, {domain -init})
+
+
 
 # to allocate GraphicBuffer
 allow guiext-server surfaceflinger:binder call;

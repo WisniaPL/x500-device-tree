@@ -71,7 +71,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # PRODUCT_PROPERTY_OVERRIDES
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
-    ro.telephony.ril_class=MediaTekRIL \
+    ro.telephony.ril_class=MT6795 \
     ro.telephony.ril.config=fakeiccid  \
     persist.call_recording.enabled=true \
     persist.call_recording.src=1 
@@ -292,22 +292,11 @@ PRODUCT_PACKAGES += \
 # Sensor Calibration
 PRODUCT_PACKAGES += libem_sensor_jni
 
-# Include IMSEnabler
-PRODUCT_PACKAGES += \
-    IMSEnabler
- 
+
 #App YGPS
 PRODUCT_PACKAGES += \
     YGPS
 
-# Keyhandler
-PRODUCT_PACKAGES += \
-    com.cyanogenmod.keyhandler
-
-PRODUCT_SYSTEM_SERVER_JARS += com.cyanogenmod.keyhandler
-
-# Never dexopt the keyhandler
-$(call add-product-dex-preopt-module-config,com.cyanogenmod.keyhandler,disable)
 
 # ANT+
 PRODUCT_PACKAGES += \
@@ -315,6 +304,9 @@ PRODUCT_PACKAGES += \
     com.dsi.ant.antradio_library \
     libantradio
 
-PRODUCT_COPY_FILES += \
-    external/ant-wireless/antradio-library/com.dsi.ant.antradio_library.xml:system/etc/permissions/com.dsi.ant.antradio_library.xml
+
+# Configure jemalloc for low memory
+MALLOC_SVELTE := true
+
+
 
