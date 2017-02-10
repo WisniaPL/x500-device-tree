@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VENDOR=LeTV
+VENDOR=leeco
 DEVICE=x500
 
 BASE=../../../vendor/$VENDOR/$DEVICE/proprietary

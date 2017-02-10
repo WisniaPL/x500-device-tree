@@ -1,6 +1,6 @@
--include vendor/LeTV/x500/BoardConfigVendor.mk
+-include vendor/leeco/x500/BoardConfigVendor.mk
 
-LOCAL_PATH := device/LeTV/x500
+LOCAL_PATH := device/leeco/x500
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
@@ -116,7 +116,7 @@ BOARD_USES_MTK_AUDIO := true
 BOARD_CONNECTIVITY_VENDOR := MediaTek
 
 # RIL
-BOARD_RIL_CLASS := ../../../device/LeTV/x500/ril
+BOARD_RIL_CLASS := ../../../device/leeco/x500/ril
 BOARD_CONNECTIVITY_MODULE := conn_soc
 
 # Display
@@ -172,7 +172,7 @@ TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
 
 # SELinux
 BOARD_SEPOLICY_DIRS := \
-    device/LeTV/x500/sepolicy
+    device/leeco/x500/sepolicy
 # Legacy blobs
 TARGET_NEEDS_TEXT_RELOCATIONS := true    
 
