@@ -5,5 +5,5 @@ echo "export USE_CCACHE=1" >> ~/.bashrc
 lunch lineage_x500-userdebug
 make -j16
 
-sh device/LeTV/x500/patches/install.sh
-sh device/LeTV/x500/patches/uninstall.sh
+sh device/leeco/x500/patches/install.sh
+sh device/leeco/x500/patches/uninstall.sh
