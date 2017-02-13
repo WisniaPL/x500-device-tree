@@ -221,5 +221,6 @@ type goodixfingerprintd_lib_file, file_type, data_file_type;
 
 type mobicore_lib_file, file_type, data_file_type;
 
-
+# TEEI data file
+type teei_data_file, file_type, data_file_type;
 

@@ -2,7 +2,6 @@
 
 import init.project.rc
 
-import init.xlog.rc
 
 
 import init.volte.rc

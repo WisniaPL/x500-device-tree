@@ -56,7 +56,6 @@
 
 # Anyone can read the logs, but if they're not in the "logs"
 # group, then they'll only see log entries for their UID.
-/dev/xLog                 0600   root       root
 /dev/log/ksystem          0600   root       log
 
 /dev/ccci*                0660   radio      radio

@@ -33,6 +33,7 @@ TARGET_OTA_ASSERT_DEVICE := x3,X500,X507,X509,X3,x500,x507,x509,X502,x502
 
 # Power
 PRODUCT_PACKAGES += \
+    power.default \
     power.mt6795
 
 # Camera
@@ -84,9 +85,11 @@ PRODUCT_PACKAGES += \
     audio_policy.default \
     libaudio-resampler \
     libaudiopolicymanagerdefault \
+   libtinyalsa \
     libtinycompress \
+    libtinymix \
     libtinyxml \
-    tinymix
+    libfs_mgr
 
 # Wifi
 PRODUCT_PACKAGES += \
@@ -137,7 +140,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.mt6795.usb.rc:root/init.mt6795.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.project.rc:root/init.project.rc \
     $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
-    $(LOCAL_PATH)/ramdisk/init.xlog.rc:root/init.xlog.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.mt6795.rc:root/ueventd.mt6795.rc \
     $(LOCAL_PATH)/ramdisk/init.volte.rc:root/init.volte.rc \
     $(LOCAL_PATH)/ramdisk/init.mal.rc:root/init.mal.rc \
@@ -286,7 +288,9 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/mtk_clear_motion.cfg:system/etc/mtk_clear_motion.cfg
 
 PRODUCT_PACKAGES += \
-   libxlog \
+   libmtk_symbols \
+   libccci_util \
+   libgralloc_extra \
    libstlport
 
 # Sensor Calibration
@@ -308,5 +312,14 @@ PRODUCT_PACKAGES += \
 # Configure jemalloc for low memory
 MALLOC_SVELTE := true
 
+# Radio dependencies
+PRODUCT_PACKAGES += \
+    muxreport \
+    terservice
 
+# Display
+PRODUCT_PACKAGES += \
+    libion
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/camera/camerasize.xml:system/etc/camerasize.xml 
 
