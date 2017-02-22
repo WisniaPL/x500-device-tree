@@ -419,6 +419,11 @@ allow mediaserver vtservice:fd use;
 # Purpose : allow mediaserver to find pq_service
 allow mediaserver pq_service:service_manager { find };
 
+# Nougat
+allow mediaserver proc:file { read open ioctl };
+allow mediaserver sysfs:file { read open };
+
+
 # Purpose : # Date : WK15.42
 # Operation : Migration
 # Purpose : RGX 1.5 DDK requires client to have fifo R/W and sync_device permission

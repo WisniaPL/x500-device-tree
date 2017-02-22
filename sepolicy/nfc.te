@@ -41,7 +41,7 @@ allow nfc nfc_data_file:file { read getattr open rename write ioctl setattr crea
 # Operation : Refine
 # Purpose   : Set NFC permission for update screen (activity,dialog,animation, ex: Nfc Beam)
 
-allow nfc guiext-server:binder call;
+#allow nfc guiext-server:binder call;
 
 
 # ==============================================

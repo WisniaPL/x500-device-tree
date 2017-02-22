@@ -29,6 +29,10 @@ dontaudit zygote untrusted_app:process ptrace;
 # Operation : Migration 
 # Purpose : for dump hprof when OOME
 allow zygote anr_data_file:dir *;
+<<<<<<< HEAD
+=======
+allow zygote anr_data_file:file ~{ execute_no_trans execute entrypoint execmod };
+>>>>>>> a781510... sepolicy update
 
 # Date : WK14.43
 # Operation : SQC2
@@ -70,3 +74,7 @@ allow zygote untrusted_app_tmpfs:file write;
 # Purpose : for TTLIA
 allow zygote radio:fd use;
 allow zygote radio_tmpfs:file create_file_perms;
+
+# Nougat
+allow zygote persist_ril_prop:file { read open getattr };
+

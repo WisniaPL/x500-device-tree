@@ -102,6 +102,10 @@ allow radio ttyGS_device:chr_file { open read write ioctl };
 # Purpose : for engineermode sensor can work normal
 allow radio als_ps_device:chr_file { read open ioctl };
 
+# Date : 2015/01/20
+# Operation : IT
+# Purpose : for engineermode Usb PHY Tuning
+allow radio debugfs:file { getattr };
 
 # Date : 2015/01/21
 # Operation : IT
@@ -186,3 +190,18 @@ allow radio sw_sync_device:chr_file getattr;
 allow radio sw_sync_device:chr_file { read write };
 allow radio sw_sync_device:chr_file open;
 allow radio sw_sync_device:chr_file ioctl;
+
+# Date : WK15.43 2015/10/21
+# Operation : MDM IT with Swift app
+# Purpose : for app labled by radio to connenct to md_monitor
+allow radio md_monitor:unix_stream_socket connectto;
+
+# Date : WK15.51 2015/12/19
+# Operation : Adapt CMCC FT auto test tool[CMDC Tester] to MTK platform
+# Purpose : for [CMDC Tester][com.hugeland.cdsplus] run on user load
+#allow radio radio_data_file:file { execute execute_no_trans };
+allow radio media_rw_data_file:dir search;
+allow radio proc_mtkcooler:dir search;
+allow radio proc_mtktz:dir search;
+allow radio md_monitor:dir search;
+allow radio md_monitor:file { read open getattr};
