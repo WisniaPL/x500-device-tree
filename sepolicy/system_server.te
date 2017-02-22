@@ -258,11 +258,12 @@ allow system_server mtk_mwblacklist_service:service_manager find;
 allow system_server debugfs:dir { read open };
 allow system_server unlabeled:file unlink;
 allow system_server wmt_prop:file { read open getattr };
-# Date : WK15.42
 # Purpose : RGX 1.5 DDK requires client to have fifo R/W and sync_device permission
-# Operation : Migration
+# Date : WK15.42
 allow system_server surfaceflinger:fifo_file rw_file_perms; 
+# Operation : Migration
 allow system_server sw_sync_device:chr_file { read write getattr open ioctl };
+allow system_server wifi_data_file:sock_file { unlink };
 
 # Add by : DroidThug
 # Operation : Goodix FP

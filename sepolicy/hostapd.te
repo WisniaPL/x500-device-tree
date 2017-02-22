@@ -15,3 +15,5 @@ dontaudit hostapd kernel:system module_request;
 # Nougat
 allow hostapd wifi_data_file:sock_file write;
 
+# Nougat
+allow hostapd wifi_data_file:sock_file write;
