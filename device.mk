@@ -72,7 +72,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # PRODUCT_PROPERTY_OVERRIDES
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
-    ro.telephony.ril_class=MT6795 \
+    ro.telephony.ril_class=MediaTekRIL \
     ro.telephony.ril.config=fakeiccid  \
     persist.call_recording.enabled=true \
     persist.call_recording.src=1 
@@ -87,15 +87,15 @@ PRODUCT_PACKAGES += \
     libaudiopolicymanagerdefault \
    libtinyalsa \
     libtinycompress \
-    libtinymix \
     libtinyxml \
     libfs_mgr
 
+# tinymix is an alsa plugin (breaks audio as of now)
+# PRODUCT_PACKAGES += \
+#     libtinymix
 # Wifi
+
 PRODUCT_PACKAGES += \
-    lib_driver_cmd_mt66xx \
-    libwifi-hal-mt66xx \
-    wifi_hal \
     libwpa_client \
     hostapd \
     hostapd_cli \
@@ -139,7 +139,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/init.mt6795.rc:root/init.mt6795.rc \
     $(LOCAL_PATH)/ramdisk/init.mt6795.usb.rc:root/init.mt6795.usb.rc \
     $(LOCAL_PATH)/ramdisk/init.project.rc:root/init.project.rc \
-    $(LOCAL_PATH)/ramdisk/init.rc:root/init.rc \
     $(LOCAL_PATH)/ramdisk/ueventd.mt6795.rc:root/ueventd.mt6795.rc \
     $(LOCAL_PATH)/ramdisk/init.volte.rc:root/init.volte.rc \
     $(LOCAL_PATH)/ramdisk/init.mal.rc:root/init.mal.rc \

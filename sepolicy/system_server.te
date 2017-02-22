@@ -271,3 +271,4 @@ binder_call(system_server,goodixfingerprintd)
 allow system_server McDriverDaemon_device:chr_file rw_file_perms;
 allow system_server tee_device:chr_file r_file_perms;
 
+allow system_server wifi_data_file:sock_file { unlink };
