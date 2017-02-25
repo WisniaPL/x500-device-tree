@@ -30,7 +30,6 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 
 ## Working
  * Adjustable brightness
- * Hardware acceleration
  * Audio
  * Auto brightness
  * MTP and Mass Storage modes
@@ -38,7 +37,6 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
  * Rotation
  
 ## Broken/Bugs
- * HDR
  * RIL
  * Video playback
  * Wi-Fi
