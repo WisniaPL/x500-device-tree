@@ -191,10 +191,6 @@ allow radio sw_sync_device:chr_file { read write };
 allow radio sw_sync_device:chr_file open;
 allow radio sw_sync_device:chr_file ioctl;
 
-# Date : WK15.43 2015/10/21
-# Operation : MDM IT with Swift app
-# Purpose : for app labled by radio to connenct to md_monitor
-allow radio md_monitor:unix_stream_socket connectto;
 
 # Date : WK15.51 2015/12/19
 # Operation : Adapt CMCC FT auto test tool[CMDC Tester] to MTK platform
@@ -203,5 +199,4 @@ allow radio md_monitor:unix_stream_socket connectto;
 allow radio media_rw_data_file:dir search;
 allow radio proc_mtkcooler:dir search;
 allow radio proc_mtktz:dir search;
-allow radio md_monitor:dir search;
-allow radio md_monitor:file { read open getattr};
+

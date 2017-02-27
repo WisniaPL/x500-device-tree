@@ -124,7 +124,7 @@ allow system_app qemu_pipe_device:chr_file rw_file_perms;
 # Operation: SQC
 # Purpose : [Settings][Battery module will call batterystats API, and it will read /sys/kernel/debug/wakeup_sources]
 # Package: com.android.settings
-allow system_app debugfs:file r_file_perms;
+#allow system_app debugfs:file r_file_perms;
 
 # Date : 2014/11/18
 # Operation : SQC

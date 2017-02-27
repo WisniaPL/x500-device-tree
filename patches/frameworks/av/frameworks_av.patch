@@ -1,109 +1,177 @@
-From 8ba6404996afdab95cbb1eb71dc0cf32bf8a8f85 Mon Sep 17 00:00:00 2001
-From: Dmitry Smirnov <divis1969@gmail.com>
-Date: Fri, 4 Nov 2016 22:26:52 +0300
-Subject: [PATCH] Disable usage of get_capture_position
-
-'get_capture_position' is a newly introduced API that is not yet
-supported by Meizu audio HAL (as of 4.5.4I stock image), so
-we disable its usage to avoid crash
-
-Change-Id: Ieab4a8bf98011d72d913e8895ec88a05bb19908b
-(cherry picked from commit 8f54bb472cb53719d3820da9cb568c09f159c27c)
----
- services/audioflinger/Threads.cpp | 28 ++++++++++++++--------------
- 1 file changed, 14 insertions(+), 14 deletions(-)
-
-diff --git a/services/audioflinger/Threads.cpp b/services/audioflinger/Threads.cpp
-index 9049df607..79721385c 100644
---- a/services/audioflinger/Threads.cpp
-+++ b/services/audioflinger/Threads.cpp
-@@ -6316,20 +6316,20 @@ reacquire_wakelock:
-         mTimestamp.mTimeNs[ExtendedTimestamp::LOCATION_SERVER] = systemTime();
+diff --git a/services/audioflinger/Android.mk b/services/audioflinger/Android.mk
+index a50bfa2..1d1cfe3 100644
+--- a/services/audioflinger/Android.mk
++++ b/services/audioflinger/Android.mk
+@@ -74,6 +74,10 @@ endif
+ endif
+ #QTI Resampler
  
-         // Update server timestamp with kernel stats
--        if (mInput->stream->get_capture_position != nullptr
--                && mPipeSource.get() == nullptr /* don't obtain for FastCapture, could block */) {
--            int64_t position, time;
--            int ret = mInput->stream->get_capture_position(mInput->stream, &position, &time);
--            if (ret == NO_ERROR) {
--                mTimestamp.mPosition[ExtendedTimestamp::LOCATION_KERNEL] = position;
--                mTimestamp.mTimeNs[ExtendedTimestamp::LOCATION_KERNEL] = time;
--                // Note: In general record buffers should tend to be empty in
--                // a properly running pipeline.
--                //
--                // Also, it is not advantageous to call get_presentation_position during the read
--                // as the read obtains a lock, preventing the timestamp call from executing.
--            }
--        }
-+//        if (mInput->stream->get_capture_position != nullptr
-+//                && mPipeSource.get() == nullptr /* don't obtain for FastCapture, could block */) {
-+//           int64_t position, time;
-+//            int ret = mInput->stream->get_capture_position(mInput->stream, &position, &time);
-+//            if (ret == NO_ERROR) {
-+//                mTimestamp.mPosition[ExtendedTimestamp::LOCATION_KERNEL] = position;
-+//                mTimestamp.mTimeNs[ExtendedTimestamp::LOCATION_KERNEL] = time;
-+//                // Note: In general record buffers should tend to be empty in
-+//                // a properly running pipeline.
-+//                //
-+//                // Also, it is not advantageous to call get_presentation_position during the read
-+//                // as the read obtains a lock, preventing the timestamp call from executing.
-+//            }
-+//        }
-         // Use this to track timestamp information
-         // ALOGD("%s", mTimestamp.toString().c_str());
- 
--- 
-2.11.0
-
-From 8d98dde23178ad21b35473949980fb78cb5161af Mon Sep 17 00:00:00 2001
-From: Wang Xuerui <idontknw.wang@gmail.com>
-Date: Tue, 25 Aug 2015 02:49:19 +0800
-Subject: [PATCH] libmedia: stub out MTK-specific bits, audio working
-
-[Ported to N by @xen0n.]
-
-Change-Id: I2b437e41599d0262838f86e794bfc887acc82821
----
- media/libmedia/Android.mk         |   8 ++
- media/libmedia/mtkaudio_stubs.cpp | 215 ++++++++++++++++++++++++++++++++++++++
- 2 files changed, 223 insertions(+)
- create mode 100644 media/libmedia/mtkaudio_stubs.cpp
-
-diff --git a/media/libmedia/Android.mk b/media/libmedia/Android.mk
-index df4e4b6f6..3fdb612df 100644
---- a/media/libmedia/Android.mk
-+++ b/media/libmedia/Android.mk
-@@ -101,5 +101,13 @@ LOCAL_CFLAGS += -Werror -Wno-error=deprecated-declarations -Wall
- LOCAL_CLANG := true
- LOCAL_SANITIZE := unsigned-integer-overflow signed-integer-overflow
- 
-+ifeq ($(MTK_HARDWARE),true)
-+LOCAL_SRC_FILES += \
-+    mtkaudio_stubs.cpp
-+
-+# StrongPointer.h
-+LOCAL_C_INCLUDES += $(TOP)/frameworks/rs/server
++ifeq ($(BOARD_USES_LEGACY_MTK_AV_BLOB),true)
++LOCAL_CFLAGS += -DLEGACY_MTK_AV_BLOB
 +endif
 +
- include $(BUILD_SHARED_LIBRARY)
+ LOCAL_MODULE:= libaudioflinger
  
+ LOCAL_SRC_FILES += \
+diff --git a/services/audioflinger/Threads.cpp b/services/audioflinger/Threads.cpp
+index 9049df6..eb3ed10 100644
+--- a/services/audioflinger/Threads.cpp
++++ b/services/audioflinger/Threads.cpp
+@@ -6314,7 +6314,7 @@ reacquire_wakelock:
+         // systemTime() is optional if the hardware supports timestamps.
+         mTimestamp.mPosition[ExtendedTimestamp::LOCATION_SERVER] += framesRead;
+         mTimestamp.mTimeNs[ExtendedTimestamp::LOCATION_SERVER] = systemTime();
+-
++#ifndef LEGACY_MTK_AV_BLOB
+         // Update server timestamp with kernel stats
+         if (mInput->stream->get_capture_position != nullptr
+                 && mPipeSource.get() == nullptr /* don't obtain for FastCapture, could block */) {
+@@ -6332,7 +6332,7 @@ reacquire_wakelock:
+         }
+         // Use this to track timestamp information
+         // ALOGD("%s", mTimestamp.toString().c_str());
+-
++#endif
+         if (framesRead < 0 || (framesRead == 0 && mPipeSource == 0)) {
+             ALOGE("read failed: framesRead=%zd", framesRead);
+             // Force input into standby so that it tries to recover at next read attempt
+
+diff --git a/camera/CameraParameters.cpp b/camera/CameraParameters.cpp
+index 76f92e7..38cdc5f 100644
+--- a/camera/CameraParameters.cpp
++++ b/camera/CameraParameters.cpp
+@@ -93,6 +93,9 @@ const char CameraParameters::KEY_VIDEO_SNAPSHOT_SUPPORTED[] = "video-snapshot-su
+ const char CameraParameters::KEY_VIDEO_STABILIZATION[] = "video-stabilization";
+ const char CameraParameters::KEY_VIDEO_STABILIZATION_SUPPORTED[] = "video-stabilization-supported";
+ const char CameraParameters::KEY_LIGHTFX[] = "light-fx";
++#ifdef MTK_HARDWARE
++const char CameraParameters::KEY_SNAPSHOT_PICTURE_FLIP[] = "snapshot-picture-filp";
++#endif
+ 
+ const char CameraParameters::TRUE[] = "true";
+ const char CameraParameters::FALSE[] = "false";
+diff --git a/camera/cameraserver/cameraserver.rc b/camera/cameraserver/cameraserver.rc
+index fea5a1d..08277d6 100644
+--- a/camera/cameraserver/cameraserver.rc
++++ b/camera/cameraserver/cameraserver.rc
+@@ -1,6 +1,6 @@
+ service cameraserver /system/bin/cameraserver
+     class main
+     user cameraserver
+-    group audio camera input drmrpc
++    group audio camera input drmrpc media
+     ioprio rt 4
+     writepid /dev/cpuset/camera-daemon/tasks /dev/stune/top-app/tasks
+diff --git a/include/camera/CameraParameters.h b/include/camera/CameraParameters.h
+index 74517b4..d17a6a1 100644
+--- a/include/camera/CameraParameters.h
++++ b/include/camera/CameraParameters.h
+@@ -538,6 +538,9 @@ public:
+     // Supported modes for special effects with light.
+     // Example values: "lowlight,hdr".
+     static const char KEY_LIGHTFX[];
++#ifdef MTK_HARDWARE
++    static const char KEY_SNAPSHOT_PICTURE_FLIP[];
++#endif
+ 
+     // Value for KEY_ZOOM_SUPPORTED or KEY_SMOOTH_ZOOM_SUPPORTED.
+     static const char TRUE[];
+diff --git a/include/media/stagefright/MediaBufferGroup.h b/include/media/stagefright/MediaBufferGroup.h
+index 3051406..d2a7d89 100644
+--- a/include/media/stagefright/MediaBufferGroup.h
++++ b/include/media/stagefright/MediaBufferGroup.h
+@@ -29,7 +29,12 @@ class MetaData;
+ 
+ class MediaBufferGroup : public MediaBufferObserver {
+ public:
++#ifdef MTK_HARDWARE
++    MediaBufferGroup();
++    MediaBufferGroup(size_t growthLimit);
++#else
+     MediaBufferGroup(size_t growthLimit = 0);
++#endif
+ 
+     // create a media buffer group with preallocated buffers
+     MediaBufferGroup(size_t buffers, size_t buffer_size, size_t growthLimit = 0);
+@@ -48,8 +53,14 @@ public:
+     // If requestedSize is 0, any free MediaBuffer will be returned.
+     // If requestedSize is > 0, the returned MediaBuffer should have buffer
+     // size of at least requstedSize.
++#ifdef MTK_HARDWARE
++    status_t acquire_buffer(MediaBuffer **buffer, bool nonBlocking = false);
++    status_t acquire_buffer(
++            MediaBuffer **buffer, bool nonBlocking, size_t requestedSize);
++#else
+     status_t acquire_buffer(
+             MediaBuffer **buffer, bool nonBlocking = false, size_t requestedSize = 0);
++#endif
+ 
+     size_t buffers() const { return mBuffers.size(); }
+ 
+diff --git a/media/libstagefright/foundation/MediaBufferGroup.cpp b/media/libstagefright/foundation/MediaBufferGroup.cpp
+index cb78879..2113ee0 100644
+--- a/media/libstagefright/foundation/MediaBufferGroup.cpp
++++ b/media/libstagefright/foundation/MediaBufferGroup.cpp
+@@ -31,7 +31,11 @@ constexpr T MIN(const T &a, const T &b) { return a <= b ? a : b; }
+ // smaller threshold than an isolated new MediaBuffer.
+ static const size_t kSharedMemoryThreshold = MIN(
+         (size_t)MediaBuffer::kSharedMemThreshold, (size_t)(4 * 1024));
+-
++#ifdef MTK_HARDWARE
++MediaBufferGroup::MediaBufferGroup() :
++    mGrowthLimit(0) {
++}
++#endif
+ MediaBufferGroup::MediaBufferGroup(size_t growthLimit) :
+     mGrowthLimit(growthLimit) {
+ }
+@@ -126,7 +130,11 @@ bool MediaBufferGroup::has_buffers() {
+     }
+     return false;
+ }
+-
++#ifdef MTK_HARDWARE
++status_t MediaBufferGroup::acquire_buffer(MediaBuffer **buffer, bool nonBlocking) {
++    return acquire_buffer(buffer, nonBlocking, 0);
++}
++#endif
+ status_t MediaBufferGroup::acquire_buffer(
+         MediaBuffer **out, bool nonBlocking, size_t requestedSize) {
+     Mutex::Autolock autoLock(mLock);
+
+diff --git a/media/libmedia/Android.mk b/media/libmedia/Android.mk
+index df4e4b6..19cefc7 100644
+--- a/media/libmedia/Android.mk
++++ b/media/libmedia/Android.mk
+@@ -97,6 +97,11 @@ LOCAL_C_INCLUDES := \
+     $(call include-path-for, audio-effects) \
+     $(call include-path-for, audio-utils)
+ 
++ifeq ($(BOARD_USES_MTK_HARDWARE),true)
++LOCAL_SRC_FILES += \
++    mtkaudio_stubs.cpp
++endif
++
+ LOCAL_CFLAGS += -Werror -Wno-error=deprecated-declarations -Wall
+ LOCAL_CLANG := true
+ LOCAL_SANITIZE := unsigned-integer-overflow signed-integer-overflow
 diff --git a/media/libmedia/mtkaudio_stubs.cpp b/media/libmedia/mtkaudio_stubs.cpp
-new file mode 100644
-index 000000000..2e600b1d9
+new file mode 100755
+index 0000000..e5f9457
 --- /dev/null
 +++ b/media/libmedia/mtkaudio_stubs.cpp
-@@ -0,0 +1,215 @@
-+// #include <MtpTypes.h>
+@@ -0,0 +1,64 @@
 +#include <system/audio.h>
-+#include <StrongPointer.h>
 +#include <media/IAudioFlinger.h>
 +#include <hardware/audio.h>
 +#include <stdlib.h>
 +#include <dlfcn.h>
 +
-+namespace android {
++#ifndef __unused
++#define __unused  __attribute__((__unused__))
++#endif
 +
-+typedef void (*audio_error_callback)(status_t err);
++namespace android {
 +
 +class AudioSystem
 +{
@@ -113,7 +181,7 @@ index 000000000..2e600b1d9
 +    static int SetVoiceUnlockSRC(uint outSR, uint outChannel);
 +    static bool stopVoiceUnlockDL();
 +    static bool startVoiceUnlockDL();
-+    static int ReadRefFromRing(void*buf, uint32_t datasz,void* DLtime);
++    static int ReadRefFromRing(void* buf, uint32_t datasz, void* DLtime);
 +    static int GetVoiceUnlockULTime(void* DLtime);
 +    static void freeVoiceUnlockDLInstance();
 +
@@ -121,7 +189,7 @@ index 000000000..2e600b1d9
 +
 +bool AudioSystem::getVoiceUnlockDLInstance()
 +{
-+  return 0;
++  return false;
 +}
 +
 +int AudioSystem::GetVoiceUnlockDLLatency()
@@ -136,15 +204,15 @@ index 000000000..2e600b1d9
 +
 +bool AudioSystem::stopVoiceUnlockDL()
 +{
-+  return 0;
++  return false;
 +}
 +
 +bool AudioSystem::startVoiceUnlockDL()
 +{
-+  return 0;
++  return false;
 +}
 +
-+int AudioSystem::ReadRefFromRing(void*buf __unused, uint32_t datasz __unused,void* DLtime __unused)
++int AudioSystem::ReadRefFromRing(void* buf __unused, uint32_t datasz __unused, void* DLtime __unused)
 +{
 +  return 0;
 +}
@@ -154,160 +222,168 @@ index 000000000..2e600b1d9
 +  return 0;
 +}
 +
-+void AudioSystem::freeVoiceUnlockDLInstance()
-+{
-+  return;
-+}
-+
-+class IATVCtrlClient
-+{
-+};
-+
-+class IATVCtrlService: public IInterface
-+{
-+public:
-+  DECLARE_META_INTERFACE(ATVCtrlService);
-+};
-+
-+class BpATVCtrlService : public BpInterface<IATVCtrlService>
-+{
-+public:
-+    BpATVCtrlService(const sp<IBinder>& impl)
-+        : BpInterface<IATVCtrlService>(impl)
-+    {
-+    }
-+    virtual ~BpATVCtrlService()
-+    {
-+    }
-+    virtual int ATVCS_matv_init()
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_ps_init(int on __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_set_parameterb(int in __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_suspend(int on __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_shutdown()
-+    {
-+        return 0;
-+    }
-+    virtual void ATVCS_matv_chscan(int mode __unused)
-+    {
-+    }
-+    virtual void ATVCS_matv_chscan_stop()
-+    {
-+    }
-+    virtual int ATVCS_matv_get_chtable(int ch __unused, void *entry __unused, int len __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_set_chtable(int ch __unused, void *entry __unused, int len __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_clear_chtable()
-+    {
-+        return 0;
-+    }
-+    virtual void ATVCS_matv_change_channel(int ch __unused)
-+    {
-+    }
-+    virtual void ATVCS_matv_set_country(int country __unused)
-+    {
-+    }
-+    virtual void ATVCS_matv_set_tparam(int mode __unused)
-+    {
-+    }
-+    virtual void ATVCS_matv_audio_play()
-+    {
-+    }
-+    virtual void ATVCS_matv_audio_stop()
-+    {
-+    }
-+    virtual int ATVCS_matv_audio_get_format()
-+    {
-+        return 0;
-+    }
-+    virtual void ATVCS_matv_audio_set_format(int val __unused)
-+    {
-+    }
-+    virtual int ATVCS_matv_audio_get_sound_system()
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_adjust(int item __unused, int val __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_get_chipdep(int item __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_matv_set_chipdep(int item __unused, int val __unused)
-+    {
-+        return 0;
-+    }
-+    virtual void ATVCS_matv_register_callback()
-+    {
-+    }
-+    virtual void registerClient(const sp<IATVCtrlClient>& client __unused)
-+    {
-+    }
-+    virtual void registerClient_FM(const sp<IATVCtrlClient>& client __unused)
-+    {
-+    }
-+    virtual void CLI(char input __unused)
-+    {
-+    }
-+    virtual int ATVCS_fm_powerup(void *parm __unused, int len __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_powerdown()
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_getrssi()
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_tune(void *parm __unused, int len __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_seek(void *parm __unused, int len __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_scan(void *parm __unused, int len __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_mute(int val __unused)
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_getchipid()
-+    {
-+        return 0;
-+    }
-+    virtual int ATVCS_fm_isFMPowerUp()
-+    {
-+        return 0;
-+    }
-+};
-+
-+IMPLEMENT_META_INTERFACE(ATVCtrlService, "android.media.IATVCtrlService");
++void AudioSystem::freeVoiceUnlockDLInstance() {}
 +
 +} // namespace
--- 
-2.11.0
+
+diff --git a/include/media/MediaProfiles.h b/include/media/MediaProfiles.h
+index b1c7c15..80724da 100644
+--- a/include/media/MediaProfiles.h
++++ b/include/media/MediaProfiles.h
+@@ -34,7 +34,23 @@ enum camcorder_quality {
+     CAMCORDER_QUALITY_1080P = 6,
+     CAMCORDER_QUALITY_QVGA = 7,
+     CAMCORDER_QUALITY_2160P = 8,
++#if defined(MTK_MEDIA_PROFILES)
++    CAMCORDER_QUALITY_MTK_LOW              = 108,
++    CAMCORDER_QUALITY_MTK_MEDIUM           = 109,
++    CAMCORDER_QUALITY_MTK_HIGH             = 110,
++    CAMCORDER_QUALITY_MTK_FINE             = 111,
++    CAMCORDER_QUALITY_MTK_NIGHT_LOW        = 112,
++    CAMCORDER_QUALITY_MTK_NIGHT_MEDIUM     = 113,
++    CAMCORDER_QUALITY_MTK_NIGHT_HIGH       = 114,
++    CAMCORDER_QUALITY_MTK_NIGHT_FINE       = 115,
++    CAMCORDER_QUALITY_MTK_LIVE_EFFECT      = 116,
++    CAMCORDER_QUALITY_MTK_H264_HIGH        = 117,
++    CAMCORDER_QUALITY_MTK_MPEG4_1080P      = 118,
++    CAMCORDER_QUALITY_MTK_FINE_4K2K        = 123,
++    CAMCORDER_QUALITY_LIST_END             = 123,
++#else
+     CAMCORDER_QUALITY_LIST_END = 8,
++#endif// MTK_MEDIA_PROFILES
+ 
+     CAMCORDER_QUALITY_TIME_LAPSE_LIST_START = 1000,
+     CAMCORDER_QUALITY_TIME_LAPSE_LOW  = 1000,
+@@ -46,7 +62,23 @@ enum camcorder_quality {
+     CAMCORDER_QUALITY_TIME_LAPSE_1080P = 1006,
+     CAMCORDER_QUALITY_TIME_LAPSE_QVGA = 1007,
+     CAMCORDER_QUALITY_TIME_LAPSE_2160P = 1008,
++#if defined(MTK_MEDIA_PROFILES)
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_LOW              = 1108,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_MEDIUM           = 1109,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_HIGH             = 1110,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_FINE             = 1111,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_LOW        = 1112,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_MEDIUM     = 1113,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_HIGH       = 1114,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_FINE       = 1115,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_LIVE_EFFECT      = 1116,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_H264_HIGH        = 1117,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_MPEG4_1080P      = 1118,
++    CAMCORDER_QUALITY_MTK_TIME_LAPSE_FINE_4K2K        = 1123,
++    CAMCORDER_QUALITY_TIME_LAPSE_LIST_END             = 1123,
++#else
+     CAMCORDER_QUALITY_TIME_LAPSE_LIST_END = 1008,
++#endif// MTK_MEDIA_PROFILES
+ 
+     CAMCORDER_QUALITY_HIGH_SPEED_LIST_START = 2000,
+     CAMCORDER_QUALITY_HIGH_SPEED_LOW  = 2000,
+@@ -55,7 +87,24 @@ enum camcorder_quality {
+     CAMCORDER_QUALITY_HIGH_SPEED_720P = 2003,
+     CAMCORDER_QUALITY_HIGH_SPEED_1080P = 2004,
+     CAMCORDER_QUALITY_HIGH_SPEED_2160P = 2005,
++#if defined(MTK_MEDIA_PROFILES)
++    CAMCORDER_QUALITY_MTK_SLOW_MOTION_LIST_START    = 2219,
++    CAMCORDER_QUALITY_MTK_SLOW_MOTION_LOW           = 2219,
++    CAMCORDER_QUALITY_MTK_SLOW_MOTION_MEDIUM        = 2220,
++    CAMCORDER_QUALITY_MTK_SLOW_MOTION_HIGH          = 2221,
++    CAMCORDER_QUALITY_MTK_SLOW_MOTION_FINE          = 2222,
++
++    CAMCORDER_QUALITY_MTK_VGA_120                   = 2231,
++    CAMCORDER_QUALITY_MTK_720P_60                   = 2240,
++    CAMCORDER_QUALITY_MTK_720P_120                  = 2241,
++    CAMCORDER_QUALITY_MTK_720P_180                  = 2242,
++    CAMCORDER_QUALITY_MTK_1080P_60                  = 2250,
++    CAMCORDER_QUALITY_MTK_1080P_120                 = 2251,
++    CAMCORDER_QUALITY_MTK_SLOW_MOTION_LIST_END      = 2251,
++    CAMCORDER_QUALITY_HIGH_SPEED_LIST_END           = 2251,
++#else
+     CAMCORDER_QUALITY_HIGH_SPEED_LIST_END = 2005,
++#endif// MTK_MEDIA_PROFILES
+ 
+     CAMCORDER_QUALITY_VENDOR_START = 10000,
+     CAMCORDER_QUALITY_VGA = 10000,
+
+diff --git a/media/libmedia/Android.mk b/media/libmedia/Android.mk
+index df4e4b6..77d73e3 100644
+--- a/media/libmedia/Android.mk
++++ b/media/libmedia/Android.mk
+@@ -97,6 +97,10 @@ LOCAL_C_INCLUDES := \
+     $(call include-path-for, audio-effects) \
+     $(call include-path-for, audio-utils)
+ 
++ifeq ($(BOARD_USES_MTK_MEDIA_PROFILES), true)
++LOCAL_CFLAGS += -DMTK_MEDIA_PROFILES
++endif
++
+ ifeq ($(BOARD_USES_MTK_HARDWARE),true)
+ LOCAL_SRC_FILES += \
+     mtkaudio_stubs.cpp
+
+diff --git a/media/libmedia/MediaProfiles.cpp b/media/libmedia/MediaProfiles.cpp
+index dd72c16..d5b331e 100644
+--- a/media/libmedia/MediaProfiles.cpp
++++ b/media/libmedia/MediaProfiles.cpp
+@@ -47,6 +47,9 @@ const MediaProfiles::NameToTagMap MediaProfiles::sAudioEncoderNameMap[] = {
+     {"aac",    AUDIO_ENCODER_AAC},
+     {"heaac",  AUDIO_ENCODER_HE_AAC},
+     {"aaceld", AUDIO_ENCODER_AAC_ELD},
++#ifdef MTK_MEDIA_PROFILES
++    {"vorbis", AUDIO_ENCODER_VORBIS},
++#endif
+     {"lpcm",  AUDIO_ENCODER_LPCM},
+ };
+ 
+@@ -103,6 +106,51 @@ const MediaProfiles::NameToTagMap MediaProfiles::sCamcorderQualityNameMap[] = {
+     {"2k", CAMCORDER_QUALITY_2k},
+     {"timelapseqhd", CAMCORDER_QUALITY_TIME_LAPSE_QHD},
+     {"timelapse2k", CAMCORDER_QUALITY_TIME_LAPSE_2k},
++
++#ifdef MTK_MEDIA_PROFILES
++    {"mtklow", CAMCORDER_QUALITY_MTK_LOW},
++    {"mtkmedium", CAMCORDER_QUALITY_MTK_MEDIUM},
++    {"mtkhigh", CAMCORDER_QUALITY_MTK_HIGH},
++    {"mtkfine", CAMCORDER_QUALITY_MTK_FINE},
++
++    {"mtknightlow", CAMCORDER_QUALITY_MTK_NIGHT_LOW},
++    {"mtknightmedium", CAMCORDER_QUALITY_MTK_NIGHT_MEDIUM},
++    {"mtknighthigh", CAMCORDER_QUALITY_MTK_NIGHT_HIGH},
++    {"mtknightfine", CAMCORDER_QUALITY_MTK_NIGHT_FINE},
++
++    {"mtkliveeffect", CAMCORDER_QUALITY_MTK_LIVE_EFFECT},
++    {"mtkh264high", CAMCORDER_QUALITY_MTK_H264_HIGH},
++    {"mtkmpeg41080p", CAMCORDER_QUALITY_MTK_MPEG4_1080P},
++    {"mtkfine4k2k", CAMCORDER_QUALITY_MTK_FINE_4K2K},
++
++    {"mtktimelapselow", CAMCORDER_QUALITY_MTK_TIME_LAPSE_LOW},
++    {"mtktimelapsemedium", CAMCORDER_QUALITY_MTK_TIME_LAPSE_MEDIUM},
++    {"mtktimelapsehigh", CAMCORDER_QUALITY_MTK_TIME_LAPSE_HIGH},
++    {"mtktimelapsefine", CAMCORDER_QUALITY_MTK_TIME_LAPSE_FINE},
++
++    {"mtktimelapsenightlow", CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_LOW},
++    {"mtktimelapsenightmedium", CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_MEDIUM},
++    {"mtktimelapsenighthigh", CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_HIGH},
++    {"mtktimelapsenightfine", CAMCORDER_QUALITY_MTK_TIME_LAPSE_NIGHT_FINE},
++
++    {"mtktimelapseliveeffect", CAMCORDER_QUALITY_MTK_TIME_LAPSE_LIVE_EFFECT},
++    {"mtktimelapseh264high", CAMCORDER_QUALITY_MTK_TIME_LAPSE_H264_HIGH},
++    {"mtktimelapsempeg41080p", CAMCORDER_QUALITY_MTK_TIME_LAPSE_MPEG4_1080P},
++    {"mtktimelapsefine4k2k", CAMCORDER_QUALITY_MTK_TIME_LAPSE_FINE_4K2K},
++
++    {"mtkslowmotionlow", CAMCORDER_QUALITY_MTK_SLOW_MOTION_LOW},
++    {"mtkslowmotionmedium", CAMCORDER_QUALITY_MTK_SLOW_MOTION_MEDIUM},
++    {"mtkslowmotionhigh", CAMCORDER_QUALITY_MTK_SLOW_MOTION_HIGH},
++    {"mtkslowmotionfine", CAMCORDER_QUALITY_MTK_SLOW_MOTION_FINE},
++
++    {"mtkvga120", CAMCORDER_QUALITY_MTK_VGA_120},
++    {"mtk720p60", CAMCORDER_QUALITY_MTK_720P_60},
++    {"mtk720p120", CAMCORDER_QUALITY_MTK_720P_120},
++    {"mtk720p180", CAMCORDER_QUALITY_MTK_720P_180},
++    {"mtk1080p60", CAMCORDER_QUALITY_MTK_1080P_60},
++    {"mtk1080p120", CAMCORDER_QUALITY_MTK_1080P_120},
++#endif // (MTK_MEDIA_PROFILES)
++
+ };
+ 
+ #if LOG_NDEBUG
 

@@ -32,7 +32,7 @@
 # have been modified by MediaTek Inc. All revisions are subject to any receiver's
 # applicable license agreements with MediaTek Inc.
 
-#ifeq ($(BOARD_GPS_LIBRARIES), true)
+ifeq ($(BOARD_GPS_LIBRARIES), true)
 LOCAL_PATH := $(call my-dir)
 
 # HAL module implemenation, not prelinked and stored in
@@ -47,6 +47,10 @@ endif
 ifneq ($(MTK_OPEN_PACKAGE), yes)
 LOCAL_STATIC_LIBRARIES := libepos
 LOCAL_CFLAGS:= -DEPO_SUPPORT
+endif
+
+ifeq ($(BOARD_USES_AOSP_GPS_HAL), true)
+LOCAL_CFLAGS:= -DAOSP_GPS_HAL
 endif
 
 LOCAL_SHARED_LIBRARIES := \
@@ -73,3 +77,4 @@ LOCAL_MODULE := gps.$(TARGET_BOARD_PLATFORM)
 LOCAL_MODULE_TAGS := optional
 
 include $(BUILD_SHARED_LIBRARY)
+endif

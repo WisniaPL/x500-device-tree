@@ -88,14 +88,18 @@ PRODUCT_PACKAGES += \
    libtinyalsa \
     libtinycompress \
     libtinyxml \
+    audio_policy.stub \
     libfs_mgr
 
 # tinymix is an alsa plugin (breaks audio as of now)
 # PRODUCT_PACKAGES += \
 #     libtinymix
+
 # Wifi
 
 PRODUCT_PACKAGES += \
+    lib_driver_cmd_mt66xx \
+    libwifi-hal-mt66xx \
     libwpa_client \
     hostapd \
     hostapd_cli \
@@ -288,18 +292,17 @@ PRODUCT_COPY_FILES += \
 
 PRODUCT_PACKAGES += \
    libmtk_symbols \
-   libccci_util \
    libgralloc_extra \
    libstlport
 
+# MTK Helpers 
+PRODUCT_PACKAGES += \
+   licam.halsensor \
+   libccci_util  
+
+
 # Sensor Calibration
 PRODUCT_PACKAGES += libem_sensor_jni
-
-
-#App YGPS
-PRODUCT_PACKAGES += \
-    YGPS
-
 
 # ANT+
 PRODUCT_PACKAGES += \

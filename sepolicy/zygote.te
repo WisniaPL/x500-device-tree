@@ -25,14 +25,7 @@ allow zygote custom_file:file create_file_perms;
 # Purpose : for untrusted app to use ptrace (e.g. 360Mobile, taobao)
 dontaudit zygote untrusted_app:process ptrace;
 
-# Date : WK14.43
-# Operation : Migration 
-# Purpose : for dump hprof when OOME
-allow zygote anr_data_file:dir *;
-<<<<<<< HEAD
-=======
-allow zygote anr_data_file:file ~{ execute_no_trans execute entrypoint execmod };
->>>>>>> a781510... sepolicy update
+
 
 # Date : WK14.43
 # Operation : SQC2
