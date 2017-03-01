@@ -30,18 +30,21 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 
 ## Working
  * Adjustable brightness
- * Audio
+ * Audio (Sometime..)
  * Auto brightness
  * MTP and Mass Storage modes
  * Vibration
  * Rotation
- 
-## Broken/Bugs
  * RIL
- * Video playback
- * Wi-Fi
- * Camera / Gallery
- * Flashlight (statusbar and camera)
- * Fingerprint
- * Bluetooth
+ * Video 
+ * Gallery
+ * Fingerprint (Restore trick)
  * Mic
+  
+## Broken/Bugs
+ * Internet
+ * Wi-Fi
+ * Camera
+ * Flashlight (statusbar and camera)
+ * Bluetooth
+
