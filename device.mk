@@ -38,7 +38,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap
+    Snap 
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -96,10 +96,10 @@ PRODUCT_PACKAGES += \
 #     libtinymix
 
 # Wifi
-
 PRODUCT_PACKAGES += \
     lib_driver_cmd_mt66xx \
     libwifi-hal-mt66xx \
+    wifi_hal \
     libwpa_client \
     hostapd \
     hostapd_cli \
@@ -322,6 +322,5 @@ PRODUCT_PACKAGES += \
 # Display
 PRODUCT_PACKAGES += \
     libion
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/camera/camerasize.xml:system/etc/camerasize.xml 
+
 
