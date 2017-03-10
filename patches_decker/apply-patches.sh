@@ -23,4 +23,6 @@ cd ../..
 cd system/netd
 git apply -v ../../device/LeTV/x500/patches_decker/0010-wifi-tethering-fix.patch
 cd ../..
-
+cd frameworks/base
+git apply -v ../../device/LeTV/x500/patches_decker/0013-PackageManager-don-t-delete-data-app-mcRegistry-fold.patch
+cd ../..

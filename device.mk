@@ -85,27 +85,19 @@ PRODUCT_PACKAGES += \
     audio_policy.default \
     libaudio-resampler \
     libaudiopolicymanagerdefault \
-   libtinyalsa \
+    libtinyalsa \
     libtinycompress \
     libtinyxml \
     audio_policy.stub \
+    libtinymix \
     libfs_mgr
-
-# tinymix is an alsa plugin (breaks audio as of now)
-# PRODUCT_PACKAGES += \
-#     libtinymix
 
 # Wifi
 PRODUCT_PACKAGES += \
     lib_driver_cmd_mt66xx \
-    libwifi-hal-mt66xx \
-    wifi_hal \
     libwpa_client \
     hostapd \
-    hostapd_cli \
-    dhcpcd.conf \
-    wpa_supplicant \
-    wpa_supplicant.conf 
+    wpa_supplicant
 
 # Media	
 PRODUCT_COPY_FILES += \
@@ -271,11 +263,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.fingerprint.xml:system/etc/permissions/android.hardware.fingerprint.xml
     
 
-# set Telephony property - SIM count
-SIM_COUNT := 2
-PRODUCT_PROPERTY_OVERRIDES += ro.telephony.sim.count=$(SIM_COUNT)
-PRODUCT_PROPERTY_OVERRIDES += persist.radio.default.sim=0
-
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd_default.conf:system/etc/hostapd/hostapd_default.conf \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
@@ -298,8 +285,8 @@ PRODUCT_PACKAGES += \
 # MTK Helpers 
 PRODUCT_PACKAGES += \
    licam.halsensor \
-   libccci_util  
-
+   libccci_util   \
+   libwvmsym
 
 # Sensor Calibration
 PRODUCT_PACKAGES += libem_sensor_jni
@@ -323,4 +310,12 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     libion
 
+# GPS
+PRODUCT_PACKAGES += \
+    gps.mt6795 \
+    libcurl \
+    YGPS
+
+# Bt
+PRODUCT_PACKAGES += libbt-vendor
 

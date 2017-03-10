@@ -9,6 +9,8 @@ LOCAL_SRC_FILES := \
     icu53.c \
     ssl.c \
 
+   
+
 # only for 32bit libraries
 LOCAL_SRC_FILES_32 := mtk_string.cpp
 LOCAL_SRC_FILES_32 += mtk_wvm32.cpp

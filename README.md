@@ -40,11 +40,12 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
  * Gallery
  * Fingerprint (Restore trick)
  * Mic
-  
-## Broken/Bugs
- * Internet
  * Wi-Fi
+ * Bluetooth
+## Broken/Bugs
+ * Music
+ * Internet
  * Camera
  * Flashlight (statusbar and camera)
- * Bluetooth
+
 
