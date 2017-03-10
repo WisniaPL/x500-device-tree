@@ -42,6 +42,7 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
  * Mic
  * Wi-Fi
  * Bluetooth
+ 
 ## Broken/Bugs
  * Music
  * Internet
