@@ -317,5 +317,5 @@ PRODUCT_PACKAGES += \
     YGPS
 
 # Bt
-PRODUCT_PACKAGES += libbt-vendor
+#PRODUCT_PACKAGES += libbt-vendor
 
