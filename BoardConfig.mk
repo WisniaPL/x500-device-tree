@@ -5,7 +5,7 @@ LOCAL_PATH := device/LeTV/x500
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 MTK_K64_SUPPORT := yes
-#USE_CAMERA_STUB := false
+USE_CAMERA_STUB := true
 #TARGET_PROVIDES_INIT_RC := true
 
 ARCH_ARM_HAVE_TLS_REGISTER := true
@@ -188,6 +188,9 @@ BOARD_SEPOLICY_DIRS += \
 
 # Keystore
 TARGET_PROVIDES_KEYMASTER := true
+
+# Camera
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
 # Hack for building without kernel sources
 ifeq ($(TARGET_DEVICE),x500)

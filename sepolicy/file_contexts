@@ -554,4 +554,6 @@
 
 # Executable binary of goodix
 /system/bin/goodixfingerprintd u:object_r:goodixfingerprintd_exec:s0
+/dev/ttyACM[0-9]* u:object_r:goodixfingerprintd_device:s0 
+/data/misc/mcRegistry(/.*)? u:object_r:mobicore_data_file:s0
 

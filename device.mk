@@ -72,7 +72,6 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 # PRODUCT_PROPERTY_OVERRIDES
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
-    ro.telephony.ril_class=MediaTekRIL \
     ro.telephony.ril.config=fakeiccid  \
     persist.call_recording.enabled=true \
     persist.call_recording.src=1 
@@ -191,7 +190,6 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio_param/AudioParamOptions.xml:system/etc/audio_param/AudioParamOptions.xml
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/permissions/platform.xml:system/etc/permissions/platform.xml \
     $(LOCAL_PATH)/configs/permissions/android.hardware.camera.xml:system/etc/permissions/android.hardware.camera.xml \
     $(LOCAL_PATH)/configs/permissions/android.hardware.microphone.xml:system/etc/permissions/android.hardware.microphone.xml \
     $(LOCAL_PATH)/configs/permissions/com.android.location.provider.xml:system/etc/permissions/com.android.location.provider.xml \
@@ -284,19 +282,11 @@ PRODUCT_PACKAGES += \
 
 # MTK Helpers 
 PRODUCT_PACKAGES += \
-   licam.halsensor \
    libccci_util   \
    libwvmsym
 
 # Sensor Calibration
 PRODUCT_PACKAGES += libem_sensor_jni
-
-# ANT+
-PRODUCT_PACKAGES += \
-    AntHalService \
-    com.dsi.ant.antradio_library \
-    libantradio
-
 
 # Configure jemalloc for low memory
 MALLOC_SVELTE := true
@@ -316,6 +306,7 @@ PRODUCT_PACKAGES += \
     libcurl \
     YGPS
 
-# Bt
-#PRODUCT_PACKAGES += libbt-vendor
+# Mediaserver with system group
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/etc/init/mediaserver.rc:system/etc/init/mediaserver.rc 
 

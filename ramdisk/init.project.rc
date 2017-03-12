@@ -201,7 +201,3 @@ service fingerprintd /system/bin/fingerprintd
     user system
     group system
 # goodix fingerprint end
-
-chmod 660 /persist/data/
-    chown system system /persist/data/
-
