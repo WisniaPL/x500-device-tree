@@ -29,19 +29,26 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 # Build Information
 
 ## Working
- * Adjustable brightness
- * Audio
- * Auto brightness
- * MTP and Mass Storage modes
- * Vibration
- * Rotation
- 
+* Adjustable brightness
+* Audio
+* Auto brightness
+* MTP and Mass Storage modes
+* Vibration
+* Rotation
+* RIL
+* Video
+* Gallery
+* Fingerprint (Restore trick)
+* Mic
+* Wi-Fi
+* Bluetooth
+* Internet
+
 ## Broken/Bugs
- * RIL
- * Video playback
- * Wi-Fi
- * Camera / Gallery
- * Flashlight (statusbar and camera)
- * Fingerprint
- * Bluetooth
- * Mic
+* Camera
+* Flashlight (statusbar and camera)
+* ?????
+
+Thanks to:
+DeckerSU 
+M.A.D Team
