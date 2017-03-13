@@ -86,8 +86,12 @@ BOARD_MKBOOTIMG_ARGS := \
 	--second_offset 0x00e88000 \
 	--tags_offset 0x0df88000 \
 	--board WisniaPL
-
+##prebuilt
 TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
+##from source
+TARGET_KERNEL_SOURCE := kernel/LeTV/x500
+TARGET_KERNEL_CONFIG := x500_defconfig
+
 
 # build old-style zip files (required for ota updater)
 BLOCK_BASED_OTA := false
