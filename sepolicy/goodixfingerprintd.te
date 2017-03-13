@@ -51,7 +51,6 @@ allow goodixfingerprintd goodixfingerprintd_data_file:dir create_dir_perms;
 allow fingerprintd goodixfingerprintd_device:chr_file rw_file_perms;
 
 type_transition goodixfingerprintd system_data_file:{ dir file } goodixfingerprintd_data_file;
-allow goodixfingerprintd goodixfingerprintd_data_file:dir create_dir_perms;
 allow goodixfingerprintd goodixfingerprintd_data_file:dir relabelfrom;
 allow goodixfingerprintd goodixfingerprintd_data_file:file create_file_perms;
 allow goodixfingerprintd goodixfingerprintd_data_file:file relabelfrom;

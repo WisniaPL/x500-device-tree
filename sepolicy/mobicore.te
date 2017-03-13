@@ -5,7 +5,7 @@
 # ==============================================
 # Type Declaration
 # ==============================================
-type mobicore, domain;
+type mobicore, domain, domain_deprecated;
 type mobicore_exec, exec_type, file_type;
 type mobicore_admin_device, dev_type;
 type mobicore_user_device, dev_type;
@@ -21,165 +21,14 @@ type proc_secmem, fs_type;
 # ==============================================
 # MTK Policy Rule
 # ==============================================
-
+# permissive mobicore;
 init_daemon_domain(mobicore)
-binder_use(mobicore)
 allow mobicore self:capability { dac_override };
 allow mobicore mobicore_admin_device:chr_file rw_file_perms;
 allow mobicore mobicore_user_device:chr_file rw_file_perms;
-allow mobicore mobicore_tui_device:chr_file rw_file_perms;
-allow mobicore mobicore_data_file:dir rw_dir_perms;
+allow mobicore mobicore_data_file:dir { rw_dir_perms rename reparent };
 allow mobicore mobicore_data_file:file create_file_perms;
 allow mobicore self:netlink_socket create_socket_perms;
 allow mobicore apk_data_file:dir write;
 allow mobicore mobicore_data_file:dir create;
 allow mobicore mobicore_data_file:file rw_file_perms;
-
-# Allow HAL module to create files
-allow mobicore mobicore_data_file:file { create_file_perms };
-
-# Allow goodix to R/W device
-allow mobicore mobicore_device:chr_file { read write ioctl open };
-allow mobicore mobicore_admin_device:chr_file { read write ioctl open };
-allow mobicore mobicore_user_device:chr_file { read write ioctl open };
-allow mobicore mobicore_tui_device:chr_file { read write ioctl open };
-
-# Need to add auth tokens to KeyStore
-use_keystore(mobicore)
-allow mobicore keystore:keystore_key { add_auth };
-
-# Permissions check
-binder_call(mobicore, system_server);
-allow mobicore permission_service:service_manager find;
-allow mobicore fingerprintd:binder { call transfer };
-allow mobicore untrusted_app:binder {call transfer};
-allow mobicore platform_app:binder { call transfer };
-
-allow mobicore mobicore_device:chr_file rw_file_perms;
-allow mobicore sysfs:file rw_file_perms;
-allow mobicore storage_file:dir create_dir_perms;
-allow mobicore storage_file:lnk_file create_file_perms;
-allow mobicore mnt_user_file:dir create_dir_perms;
-allow mobicore mnt_user_file:lnk_file create_file_perms;
-
-allow mobicore self:capability { dac_override dac_read_search };
-allow mobicore fuse:dir create_dir_perms;
-allow mobicore fuse:file create_file_perms;
-
-# Give permissions to create directories
-allow mobicore mobicore_data_file:dir create_dir_perms;
-
-# Fingerprint device
-allow fingerprintd mobicore_device:chr_file rw_file_perms;
-allow fingerprintd mobicore_admin_device:chr_file rw_file_perms;
-allow fingerprintd mobicore_user_device:chr_file rw_file_perms;
-allow fingerprintd mobicore_tui_device:chr_file rw_file_perms;
-
-type_transition mobicore system_data_file:{ dir file } mobicore_data_file;
-allow mobicore mobicore_data_file:dir create_dir_perms;
-allow mobicore mobicore_data_file:dir relabelfrom;
-allow mobicore mobicore_data_file:file relabelfrom;
-
-# ==============================================
-# Policy File of /system/bin/mobicore Executable File
-
-#add this type trans
-file_type_auto_trans(mobicore, system_data_file, mobicore_data_file)
-
-# mobicore
-
-binder_call(mobicore, binderservicedomain)
-binder_call(mobicore, appdomain)
-binder_service(mobicore)
-
-# callback to fingerprintd with binder
-binder_call(mobicore, fingerprintd);
-allow mobicore fingerprintd_service:service_manager find;
-
-# allow to call PowerManagerService
-binder_call(mobicore, system_server);
-allow mobicore power_service:service_manager find;
-
-# allow to set properties
-set_prop(mobicore, system_prop)
-set_prop(mobicore, config_prop)
-
-# add self
-allow mobicore self:process execmem;
-allow mobicore self:capability { dac_override dac_read_search };
-allow mobicore kernel:system module_request;
-
-# allow mobicore_device
-allow mobicore mobicore_admin_device:file { create_file_perms };
-allow mobicore mobicore_admin_device:chr_file { rw_file_perms setattr };
-allow mobicore mobicore_admin_device:chr_file { getattr open read ioctl lock append write };
-
-allow mobicore mobicore_user_device:file { create_file_perms };
-allow mobicore mobicore_user_device:chr_file { rw_file_perms setattr };
-allow mobicore mobicore_user_device:chr_file { getattr open read ioctl lock append write };
-
-allow mobicore mobicore_tui_device:file { create_file_perms };
-allow mobicore mobicore_tui_device:chr_file { rw_file_perms setattr };
-allow mobicore mobicore_tui_device:chr_file { getattr open read ioctl lock append write };
-
-# allow fingerprintd_data_file
-allow mobicore fingerprintd_data_file:file { create_file_perms rw_file_perms create open };
-allow mobicore fingerprintd_data_file:chr_file { rw_file_perms setattr };
-r_dir_file(mobicore, fingerprintd_data_file)
-allow mobicore fingerprintd_data_file:dir { ra_dir_perms r_dir_perms };
-allow mobicore fingerprintd_data_file:dir { create setattr };
-
-# allow mobicore_data_file
-allow mobicore mobicore_data_file:file { create_file_perms create open write};
-allow mobicore mobicore_data_file:chr_file { rw_file_perms setattr };
-r_dir_file(mobicore, mobicore_data_file)
-allow mobicore mobicore_data_file:dir { create setattr open read ra_dir_perms rw_dir_perms };
-allow mobicore_data_file labeledfs:filesystem associate;
-
-# Need to add auth tokens to KeyStore
-use_keystore(mobicore)
-allow mobicore keystore:keystore_key { add_auth };
-
-# For permissions checking
-binder_call(mobicore, system_server);
-allow mobicore permission_service:service_manager find;
-
-# allow SD-Card
-allow mobicore fuse:dir create_dir_perms;
-allow mobicore fuse:file create_file_perms;
-r_dir_file(mobicore, sdcard_type)
-allow mobicore sdcard_type:file write;
-allow mobicore app_data_file:dir search;
-allow mobicore app_data_file:file rw_file_perms;
-
-#allow mobicore persist_file:file create_file_perms;
-#allow mobicore persist_file:chr_file { rw_file_perms setattr };
-#r_dir_file(mobicore, persist_file)
-#allow mobicore persist_file:dir create_dir_perms;
-#allow mobicore persist_file:dir ra_dir_perms;
-#allow mobicore persist_data_file:file create_file_perms;
-#allow mobicore persist_data_file:chr_file { rw_file_perms setattr };
-#r_dir_file(mobicore, persist_data_file)
-#allow mobicore persist_data_file:dir create_dir_perms;
-#allow mobicore persist_data_file:dir ra_dir_perms;
-
-allow mobicore self:netlink_socket create;
-#allow mobicore unlabeled:file { read open getattr execute };
-allow mobicore system_data_file:dir { write open read add_name create};
-allow mobicore system_data_file:file { open};
-
-# allow TEE
-allow mobicore tee_device:chr_file { open read ioctl write };
-allow mobicore mobicore_device:chr_file { open read ioctl write };
-allow mobicore mobicore-user_device:chr_file { open read ioctl write };
-allow mobicore mobicore_user_device:chr_file { open read ioctl write };
-allow mobicore self:netlink_socket read;
-allow mobicore mobicore:netlink_socket read;
-allow mobicore storage_file:dir create_dir_perms;
-allow mobicore storage_file:lnk_file create_file_perms;
-
-# allow goodixfingerprintd_lib_file
-allow mobicore mobicore_lib_file:file { create_file_perms getattr read };
-allow mobicore mobicore_lib_file:chr_file { rw_file_perms setattr };
-allow mobicore mobicore_lib_file:dir ra_dir_perms;
-allow mobicore mobicore_lib_file:file r_file_perms;
