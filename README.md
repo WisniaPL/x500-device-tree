@@ -49,6 +49,18 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 * Flashlight (statusbar and camera)
 * ?????
 
+DONATE
+https://www.paypal.me/Wisniabdg
+
+DOWNLOAD:
+
+LineageOS14 http://forum.le.com/in/index.php?threads/lineageos-14-1-leeco-1s.18742/
+
+RR http://forum.le.com/in/index.php?threads/resurrection-remix-5-8-2-beta-android-7-1-1.18768/
+
 Thanks to:
-DeckerSU 
-M.A.D Team
+
+DeckerSU
+
+M.A.D
+
