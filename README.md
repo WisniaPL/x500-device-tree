@@ -1,4 +1,4 @@
-# Leeco 1s - LineageOS 14.1 
+# Leeco 1s - LineageOS 14.1
 ==============
 
 This branch is device for building of the LineageOS 14.1.
@@ -44,22 +44,25 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 * Bluetooth
 * Internet
 * GPS
+* IR
+* Audio over BT
 
 ## Broken/Bugs
 * Camera
 * Flashlight (statusbar and camera)
 * ?????
 
-DONATE
+## DONATE
+
 https://www.paypal.me/Wisniabdg
 
-DOWNLOAD:
+## DOWNLOADS
 
 LineageOS14 http://forum.le.com/in/index.php?threads/lineageos-14-1-leeco-1s.18742/
 
 RR http://forum.le.com/in/index.php?threads/resurrection-remix-5-8-2-beta-android-7-1-1.18768/
 
-Thanks to:
+## THANKS TO:
 
 DeckerSU
 
