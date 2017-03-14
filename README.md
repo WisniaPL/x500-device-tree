@@ -38,11 +38,12 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 * RIL
 * Video
 * Gallery
-* Fingerprint (Restore trick)
+* Fingerprint
 * Mic
 * Wi-Fi
 * Bluetooth
 * Internet
+* GPS
 
 ## Broken/Bugs
 * Camera
@@ -63,4 +64,8 @@ Thanks to:
 DeckerSU
 
 M.A.D
+
+Bule
+
+Danielhk
 
