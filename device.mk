@@ -12,8 +12,8 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-3072-dalv
 # Call hwui memory config
 $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-3072-hwui-memory.mk)
 
-# The gps config appropriate for this device
-$(call inherit-product, device/common/gps/gps_us_supl.mk)
+# The gps config appropriate for this device 
+$(call inherit-product, device/common/gps/gps_us_supl.mk) 
 
 # Vendor
 $(call inherit-product, vendor/LeTV/x500/x500-vendor-blobs.mk)
@@ -276,7 +276,9 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
    libmtk_symbols \
    libgralloc_extra \
-   libstlport
+   libstlport \
+   libgui_ext \
+   libui_ext
 
 # MTK Helpers 
 PRODUCT_PACKAGES += \

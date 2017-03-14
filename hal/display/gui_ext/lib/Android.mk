@@ -52,9 +52,9 @@ MTK_HWC_CHIP = $(shell echo $(MTK_PLATFORM) | tr A-Z a-z )
 
 LOCAL_C_INCLUDES:= \
     $(TOP)/frameworks/base/include/ \
-    $(TOP)/hardware/lenovo/graphics/gui_ext/inc \
-    $(TOP)/hardware/lenovo/graphics/ui_ext/inc \
-    $(TOP)/hardware/lenovo/graphics/gralloc_extra/include
+    $(LOCAL_PATH)/../inc \
+    $(LOCAL_PATH)/../../ui_ext/inc \
+    $(LOCAL_PATH)/../../gralloc_extra/include
 
 LOCAL_SHARED_LIBRARIES := \
     libutils \
