@@ -80,7 +80,14 @@ BOARD_MKBOOTIMG_ARGS := \
 	--tags_offset 0x0df88000 \
 	--board WisniaPL
 
+#prebuilt
 TARGET_PREBUILT_KERNEL := $(LOCAL_PATH)/prebuilt/kernel
+#source
+TARGET_KERNEL_SOURCE := kernel/LeTV/x500
+TARGET_KERNEL_CONFIG := x500_defconfig
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+BOARD_KERNEL_IMAGE_NAME := Image.gz-dtb
+
 
 # build old-style zip files (required for ota updater)
 BLOCK_BASED_OTA := false
