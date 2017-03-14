@@ -114,6 +114,9 @@ USE_MINIKIN := true
 # Charger
 BOARD_CHARGER_SHOW_PERCENTAGE := true
 
+# Offline charging
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/BOOT/BOOT/boot/boot_mode
+
 # Fonts
 EXTENDED_FONT_FOOTPRINT := true
 
@@ -180,7 +183,7 @@ BOARD_SEPOLICY_DIRS := \
     device/LeTV/x500/sepolicy
 
 # Seccomp Filter
-BOARD_SEPOLICY_DIRS += \
+BOARD_SECCOMP_POLICY := \
        $(LOCAL_PATH)/seccomp
 
 # Legacy blobs
@@ -194,7 +197,9 @@ BOARD_MEDIATEK_USES_GPS := true
 # Camera
 #TARGET_HAS_LEGACY_CAMERA_HAL1 := true
 
-# Hack for building without kernel sources
+#Hack for prebuilt kernel
 ifeq ($(TARGET_DEVICE),x500)
 $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
+$(shell touch $(OUT)/obj/KERNEL_OBJ/usr/export_includes)
 endif
+
