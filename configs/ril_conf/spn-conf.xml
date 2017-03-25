@@ -681,9 +681,9 @@
   <spnOverride numeric="40404"  spn="IDEA CELLULAR - Delhi" />
   <spnOverride numeric="40424"  spn="IDEA Cellular - Gujarat" />
   <spnOverride numeric="40422"  spn="IDEA Cellular - Maharashtra" />
-  <spnOverride numeric="405855" spn="Loop Mobile" />
-  <spnOverride numeric="405864" spn="Loop Mobile" />
-  <spnOverride numeric="405865" spn="Loop Mobile" />
+  <spnOverride numeric="405855" spn="Reliance Jio" />
+  <spnOverride numeric="405864" spn="Reliance Jio" />
+  <spnOverride numeric="405865" spn="Reliance Jio" />
   <spnOverride numeric="40468"  spn="MTNL - Delhi" />
   <spnOverride numeric="40469"  spn="MTNL - Mumbai" />
   <spnOverride numeric="40450"  spn="Reliance" />
@@ -1708,4 +1708,3 @@
   <spnOverride numeric="64801"  spn="Net*One" />
   <spnOverride numeric="64803"  spn="Telecel" />
 </spnOverrides>
-
