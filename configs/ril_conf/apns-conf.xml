@@ -1945,6 +1945,8 @@
   <apn carrier="Vodafone IN" mcc="404" mnc="20" apn="www" type="default,supl" />
   <apn carrier="Loop Internet" mcc="404" mnc="21" apn="www" type="default,supl" />
   <apn carrier="LOOP WAP" mcc="404" mnc="21" apn="mizone" proxy="10.0.0.10" port="9401" user="Mobile phone number" password="bplmmsc" authtype="1" type="default,supl" />
+  <apn carrier="jio" mcc="405" mnc="872" apn="jionet" type="default,supl" />
+  <apn carrier="Jio4G" mcc="405" mnc="872" apn="jionet" mmsc="http://mmsc.rcom.co.in/mms/" mmsproxy="10.239.221.5" mmsport="8080" type="mms" />
   <apn carrier="BPL MMS" mcc="404" mnc="21" apn="mizone" user="Mobile phone number" password="bplmmsc" mmsc="http://mms.bplmobile.com:8080" mmsproxy="10.0.0.10" mmsport="8080" authtype="1" type="mms" />
   <apn carrier="BPL MMS" mcc="404" mnc="21" apn="mizone" user="MSISDN" password="bplmmsc" mmsc="http://mms.bplmobile.com:8080" mmsproxy="10.0.0.10" mmsport="8080" type="mms" />
   <apn carrier="BPL" mcc="404" mnc="21" apn="www" user="MSISDN" password="bplmmsc" type="default,supl" />
