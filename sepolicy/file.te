@@ -203,25 +203,25 @@ type autokd_data_file, file_type, data_file_type;
 #ipoh data file
 type ipoh_data_file, file_type, data_file_type;
 
-type sysfs_dt2w, fs_type, sysfs_type;
+#Sensors
 type mxg2320_data_file, file_type, data_file_type;
 type mmc3524x_data_file, file_type, data_file_type;
 
-# Fingerprint: sysfs directory file
+# Fingerprint
 type sysfs_fingerprintd, fs_type, sysfs_type;
-
-# Fingerprint: 
 type sysfs_goodixfingerprintd, fs_type, sysfs_type;
-
-# goodix data file
 type goodixfingerprintd_data_file, file_type, data_file_type;
-
-# Goodix library files
 type goodixfingerprintd_lib_file, file_type, data_file_type;
 
+# Mobicore library files
 type mobicore_lib_file, file_type, data_file_type;
 
 # TEEI data file
 type teei_data_file, file_type, data_file_type;
-type sysfs_devinfo, fs_type, sysfs_type;
 
+#OTHER
+type sysfs_devinfo, fs_type, sysfs_type;
+#type fast_charge_sysfs, fs_type, sysfs_type;
+#type smartwake_sysfs, fs_type, sysfs_type;
+#type display_color_sysfs, fs_type, sysfs_type;
+#type sysfs_dt2w, fs_type, sysfs_type;

@@ -6,69 +6,34 @@ type goodixfingerprintd_exec, exec_type, file_type;
 # MTK Policy Rule
 # ==============================================
 
-# goodix fingerprintd
+# Goodixfingerprintd
 init_daemon_domain(goodixfingerprintd)
 binder_use(goodixfingerprintd)
-
-# Sllow goodix to read lib files
-allow goodixfingerprintd goodixfingerprintd_lib_file:file r_file_perms;
-
-# Allow HAL module to create files
-allow goodixfingerprintd goodixfingerprintd_data_file:file { create_file_perms };
-
-# Give HAL module R/W permissions contents of data dir
-allow goodixfingerprintd goodixfingerprintd_data_file:dir rw_dir_perms;
-
-# Allow goodix to R/W device
-allow goodixfingerprintd goodixfingerprintd_device:chr_file { read write ioctl open };
-
-# Need to add auth tokens to KeyStore
-use_keystore(goodixfingerprintd)
-allow goodixfingerprintd keystore:keystore_key { add_auth };
-
-# Permissions check
-binder_call(goodixfingerprintd, system_server);
-allow goodixfingerprintd permission_service:service_manager find;
+binder_call(goodixfingerprintd, binderservicedomain)
+binder_call(goodixfingerprintd, appdomain)
+binder_service(goodixfingerprintd)
+binder_call(goodixfingerprintd, fingerprintd);
 allow goodixfingerprintd fingerprintd:binder { call transfer };
 allow goodixfingerprintd untrusted_app:binder {call transfer};
 allow goodixfingerprintd platform_app:binder { call transfer };
-
 allow goodixfingerprintd mobicore_device:chr_file rw_file_perms;
 allow goodixfingerprintd sysfs:file rw_file_perms;
 allow goodixfingerprintd storage_file:dir create_dir_perms;
 allow goodixfingerprintd storage_file:lnk_file create_file_perms;
 allow goodixfingerprintd mnt_user_file:dir create_dir_perms;
 allow goodixfingerprintd mnt_user_file:lnk_file create_file_perms;
-
 allow goodixfingerprintd self:capability { dac_override dac_read_search };
 allow goodixfingerprintd fuse:dir create_dir_perms;
 allow goodixfingerprintd fuse:file create_file_perms;
 
-# Give permissions to create directories
-allow goodixfingerprintd goodixfingerprintd_data_file:dir create_dir_perms;
 
-# Fingerprint device
+# GoodixFingerprint device
 allow fingerprintd goodixfingerprintd_device:chr_file rw_file_perms;
-
 type_transition goodixfingerprintd system_data_file:{ dir file } goodixfingerprintd_data_file;
 allow goodixfingerprintd goodixfingerprintd_data_file:dir relabelfrom;
 allow goodixfingerprintd goodixfingerprintd_data_file:file create_file_perms;
 allow goodixfingerprintd goodixfingerprintd_data_file:file relabelfrom;
-
-# ==============================================
-# Policy File of /system/bin/goodixfingerprintd Executable File
-
-#add this type trans
 file_type_auto_trans(goodixfingerprintd, system_data_file, goodixfingerprintd_data_file)
-
-# goodixfingerprintd
-
-binder_call(goodixfingerprintd, binderservicedomain)
-binder_call(goodixfingerprintd, appdomain)
-binder_service(goodixfingerprintd)
-
-# callback to fingerprintd with binder
-binder_call(goodixfingerprintd, fingerprintd);
 allow goodixfingerprintd fingerprintd_service:service_manager find;
 
 # allow to call PowerManagerService
@@ -111,14 +76,6 @@ allow goodixfingerprintd goodixfingerprintd_lib_file:dir ra_dir_perms;
 # allow system_file
 allow goodixfingerprintd system_file:file { rx_file_perms };
 
-# Need to add auth tokens to KeyStore
-use_keystore(goodixfingerprintd)
-allow goodixfingerprintd keystore:keystore_key { add_auth };
-
-# For permissions checking
-binder_call(goodixfingerprintd, system_server);
-allow goodixfingerprintd permission_service:service_manager find;
-
 # allow SD-Card
 allow goodixfingerprintd fuse:dir create_dir_perms;
 allow goodixfingerprintd fuse:file create_file_perms;
@@ -126,20 +83,7 @@ r_dir_file(goodixfingerprintd, sdcard_type)
 allow goodixfingerprintd sdcard_type:file write;
 allow goodixfingerprintd app_data_file:dir search;
 allow goodixfingerprintd app_data_file:file rw_file_perms;
-
-#allow goodixfingerprintd persist_file:file create_file_perms;
-#allow goodixfingerprintd persist_file:chr_file { rw_file_perms setattr };
-#r_dir_file(goodixfingerprintd, persist_file)
-#allow goodixfingerprintd persist_file:dir create_dir_perms;
-#allow goodixfingerprintd persist_file:dir ra_dir_perms;
-#allow goodixfingerprintd persist_data_file:file create_file_perms;
-#allow goodixfingerprintd persist_data_file:chr_file { rw_file_perms setattr };
-#r_dir_file(goodixfingerprintd, persist_data_file)
-#allow goodixfingerprintd persist_data_file:dir create_dir_perms;
-#allow goodixfingerprintd persist_data_file:dir ra_dir_perms;
-
 allow goodixfingerprintd self:netlink_socket create;
-#allow goodixfingerprintd unlabeled:file { read open getattr execute };
 allow goodixfingerprintd system_data_file:dir { write open read add_name create};
 allow goodixfingerprintd system_data_file:file { open};
 
@@ -153,7 +97,8 @@ allow goodixfingerprintd goodixfingerprintd:netlink_socket read;
 allow goodixfingerprintd storage_file:dir create_dir_perms;
 allow goodixfingerprintd storage_file:lnk_file create_file_perms;
 allow goodixfingerprintd tee_device:chr_file { rw_file_perms };
-#
+
+# allow Mobicore
 allow goodixfingerprintd mobicore_data_file:file create_file_perms;
 allow goodixfingerprintd mobicore_data_file:chr_file { rw_file_perms setattr };
 r_dir_file(goodixfingerprintd, mobicore_data_file)

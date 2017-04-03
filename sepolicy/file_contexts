@@ -527,19 +527,11 @@
 /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/security      u:object_r:secblock_device:s0
 /dev/block/mmcblk0p13    u:object_r:secblock_device:s0
 
-/dev/emmcrpmb0 u:object_r:teei_rpmb_device:s0
 /data/data(/.*)?       u:object_r:system_data_file:s0
 /dev/socket/sdcard u:object_r:vold_socket:s0
 
-# Device files
+# Goodixfingerprintd files
 /dev/goodix_fp                 u:object_r:goodixfingerprintd_device:s0
-# Goodix librarires
-/system/lib64/libMcClient.so  u:object_r:mobicore_lib_file:s0
-/system/lib/libMcClient.so  u:object_r:mobicore_lib_file:s0
-/system/lib64/libMcRegistry.so  u:object_r:mobicore_lib_file:s0
-/system/lib/libMcRegistry.so  u:object_r:mobicore_lib_file:s0
-/system/lib/libMcGatekeeper.so u:object_r:mobicore_lib_file:s0
-/system/lib64/libMcGatekeeper.so u:object_r:mobicore_lib_file:s0
 /system/lib64/libgf_hal.so u:object_r:goodixfingerprintd_lib_file:s0
 /system/lib64/libgf_ca.so  u:object_r:goodixfingerprintd_lib_file:s0
 /system/lib/libgf_ca.so  u:object_r:goodixfingerprintd_lib_file:s0
@@ -548,12 +540,24 @@
 /system/lib/libgf_hal.so   u:object_r:goodixfingerprintd_lib_file:s0
 /system/lib64/libgoodixfingerprintd_binder.so  u:object_r:goodixfingerprintd_lib_file:s0
 /system/lib/libgoodixfingerprintd_binder.so  u:object_r:goodixfingerprintd_lib_file:s0
-
+/system/bin/goodixfingerprintd u:object_r:goodixfingerprintd_exec:s0
 /data/system/fingerprint(/.*)?    u:object_r:goodixfingerprintd_data_file:s0
 /persist/data/gxfp(/.*)?		  u:object_r:goodixfingerprintd_data_file:s0
-
-# Executable binary of goodix
-/system/bin/goodixfingerprintd u:object_r:goodixfingerprintd_exec:s0
 /dev/ttyACM[0-9]* u:object_r:goodixfingerprintd_device:s0 
+
+# Mobicore files
+/system/lib64/libMcClient.so  u:object_r:mobicore_lib_file:s0
+/system/lib/libMcClient.so  u:object_r:mobicore_lib_file:s0
+/system/lib64/libMcRegistry.so  u:object_r:mobicore_lib_file:s0
+/system/lib/libMcRegistry.so  u:object_r:mobicore_lib_file:s0
+/system/lib/libMcGatekeeper.so u:object_r:mobicore_lib_file:s0
+/system/lib64/libMcGatekeeper.so u:object_r:mobicore_lib_file:s0
 /data/misc/mcRegistry(/.*)? u:object_r:mobicore_data_file:s0
+
+# Other
+#/sys/devices/platform/mtk_disp_mgr.0/rgb                        u:object_r:display_color_sysfs:s0
+#/sys/kernel/charge_levels/quick_charge_enable                   u:object_r:fast_charge_sysfs:s0
+#/sys/kernel/charge_levels/charge_level_ac                       u:object_r:fast_charge_sysfs:s0
+#/sys/kernel/charge_levels/charge_level_usb u:object_r:fast_charge_sysfs:s0
+#/sys/bus/i2c/devices/i2c-2/2-004b/wake_gesture_enable          u:object_r:smartwake_sysfs:s0
 

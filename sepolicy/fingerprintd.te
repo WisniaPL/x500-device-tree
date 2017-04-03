@@ -1,10 +1,2 @@
-# ==============================================
-# Policy File of /system/bin/goodixfingerprintd Executable File
-
-# Type Declaration
-#type goodixfingerprintd, domain;
-#type goodixfingerprintd_exec, exec_type, file_type;
-
-# MTK Policy Rule
 allow fingerprintd fingerprintd_data_file:dir create_dir_perms;
 
