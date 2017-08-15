@@ -50,3 +50,9 @@ allow fuelgauged input_device:file { open read };
 # Nougat
 allow fuelgauged rootfs:lnk_file { getattr };
 
+
+allow fuelgauged self:netlink_socket create_socket_perms;
+
+# data/fuelgauge_datalog.txt
+allow fuelgauged fuelgauge_data_file:dir r_file_perms;
+allow fuelgauged fuelgauge_data_file:file rw_file_perms;

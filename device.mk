@@ -16,13 +16,13 @@ $(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-3072-hwui
 $(call inherit-product, device/common/gps/gps_us_supl.mk) 
 
 # Vendor
-$(call inherit-product, vendor/LeTV/x500/x500-vendor-blobs.mk)
+$(call inherit-product, vendor/LeEco/X3/X3-vendor-blobs.mk)
 
 # Overlay Folder
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay
 
 # Folder path
-LOCAL_PATH := device/LeTV/x500
+LOCAL_PATH := device/LeEco/X3
 
 # Screen density
 PRODUCT_AAPT_CONFIG := normal xxhdpi
@@ -38,7 +38,7 @@ PRODUCT_PACKAGES += \
 
 # Camera
 PRODUCT_PACKAGES += \
-    Snap 
+    Snap
 
 # Charger
 PRODUCT_PACKAGES += \
@@ -57,7 +57,7 @@ PRODUCT_PACKAGES += \
 
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.allow.mock.location=0 \
-    ro.debuggable=1 \
+    ro.debuggable=0 \
     ro.zygote=zygote64_32 \
     dalvik.vm.dex2oat-Xms=64m \
     dalvik.vm.dex2oat-Xmx=64m \
@@ -65,7 +65,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     dalvik.vm.image-dex2oat-Xmx=512m \
     ro.dalvik.vm.native.bridge=0 \
     persist.sys.usb.config=mtp \
-    ro.mount.fs=EXT4 \
+    persist.debug.xlog.enable=0 \
     camera.disable_zsl_mode=1 \
     persist.sys.timezone=Europe/Warsaw
 
@@ -74,8 +74,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     ro.kernel.android.checkjni=0 \
     ro.telephony.ril.config=fakeiccid  \
     persist.call_recording.enabled=true \
-    persist.call_recording.src=1  \
-    ro.sys.fw.bg_apps_limits=5
+    persist.call_recording.src=1 
 
 # Audio
 PRODUCT_PACKAGES += \
@@ -103,6 +102,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:system/etc/media_codecs_google_audio.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_telephony.xml:system/etc/media_codecs_google_telephony.xml \
+    frameworks/av/media/libstagefright/data/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
     frameworks/av/media/libstagefright/data/media_codecs_google_video.xml:system/etc/media_codecs_google_video.xml
 
 
@@ -116,14 +116,28 @@ PRODUCT_PACKAGES += \
     resize2fs \
     setup_fs \
     ext4_resize \
+libext2_blkid \
+    libext2_uuid_static  \
     superumount 
+    
+# exFAT
+PRODUCT_PACKAGES += \
+    mount.exfat \
+    fsck.exfat \
+    mkfs.exfat
+
+# NTFS
+PRODUCT_PACKAGES += \
+    fsck.ntfs \
+    mkfs.ntfs \
+    mount.ntfs
 
 PRODUCT_TAGS += dalvik.gc.type-precise
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 # Var patch
 ifneq ($(TARGET_BUILD_VARIANT),user,userdebug,eng)
-  ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=0
-  ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=0
+  ADDITIONAL_DEFAULT_PROPERTIES += ro.adb.secure=1
+  ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1
 endif
 
 PRODUCT_COPY_FILES += \
@@ -168,15 +182,20 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.telephony.gsm.xml:system/etc/permissions/android.hardware.telephony.gsm.xml \
     frameworks/native/data/etc/android.software.sip.xml:system/etc/permissions/android.software.sip.xml \
     frameworks/native/data/etc/android.hardware.sensor.compass.xml:system/etc/permissions/android.hardware.sensor.compass.xml \
-    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml
+    frameworks/native/data/etc/android.hardware.usb.host.xml:system/etc/permissions/android.hardware.usb.host.xml \
+    frameworks/native/data/etc/android.hardware.sensor.gyroscope.xml:system/etc/permissions/android.hardware.sensor.gyroscope.xml \
+    frameworks/native/data/etc/android.hardware.camera.manual_sensor.xml:system/etc/permissions/android.hardware.camera.manual_sensor.xml
+
 
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/codec/media_codecs_google_video_le.xml:system/etc/media_codecs_google_video_le.xml \
-    $(LOCAL_PATH)/configs/codec/media_codecs_mediatek_audio.xml:system/etc/media_codecs_mediatek_audio.xml \
-    $(LOCAL_PATH)/configs/codec/media_codecs_mediatek_video.xml:system/etc/media_codecs_mediatek_video.xml \
-    $(LOCAL_PATH)/configs/codec/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/codec/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/codec/media_codecs.xml:system/etc/permissions/media_codecs.xml
+    $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/media_codecs.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/permissions/media_codecs.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_ffmpeg.xml:system/etc/media_codecs_ffmpeg.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_audio.xml:system/etc/media_codecs_mediatek_audio.xml\
+    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_video.xml:system/etc/media_codecs_mediatek_video.xml \
+    $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
+    $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/mtk_clear_motion.cfg:system/etc/mtk_clear_motion.cfg
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/audio/audio_device.xml:system/etc/audio_device.xml \
@@ -194,8 +213,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/permissions/com.android.media.remotedisplay.xml:system/etc/permissions/com.android.media.remotedisplay.xml \
     $(LOCAL_PATH)/configs/permissions/com.android.mediadrm.signer.xml:system/etc/permissions/com.android.mediadrm.signer.xml \
     $(LOCAL_PATH)/configs/permissions/android.hardware.camera.manual_postprocessing.xml:system/etc/permissions/android.hardware.camera.manual_postprocessing.xml \
-    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.manual_sensor.xml:system/etc/permissions/android.hardware.camera.manual_sensor.xml \
-    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml \
+    $(LOCAL_PATH)/configs/permissions/android.hardware.camera.raw.xml:system/etc/permissions/android.hardware.camera.raw.xml 
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/wifi/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
@@ -228,6 +246,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/.tp/thermal.off.conf:system/etc/.tp/thermal.off.conf \
     $(LOCAL_PATH)/configs/.tp/.ht120.mtc:system/etc/.tp/.ht120.mtc \
     $(LOCAL_PATH)/configs/.tp/.thermal_policy_00:system/etc/.tp/.thermal_policy_00 \
+    $(LOCAL_PATH)/configs/.tp/.thermal_policy_game_01:system/etc/.tp/.thermal_policy_game_01 \
     $(LOCAL_PATH)/configs/.tp/.thermal_policy_01:system/etc/.tp/.thermal_policy_01
 
 PRODUCT_COPY_FILES += \
@@ -264,32 +283,14 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/hostapd/hostapd.accept:system/etc/hostapd/hostapd.accept \
     $(LOCAL_PATH)/configs/hostapd/hostapd.deny:system/etc/hostapd/hostapd.deny
 
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media/media_codecs.xml:system/etc/permissions/media_codecs.xml \
-    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_audio.xml:system/etc/media_codecs_mediatek_audio.xml\
-    $(LOCAL_PATH)/configs/media/media_codecs_mediatek_video.xml:system/etc/media_codecs_mediatek_video.xml \
-    $(LOCAL_PATH)/configs/media/media_codecs_performance.xml:system/etc/media_codecs_performance.xml \
-    $(LOCAL_PATH)/configs/media/media_profiles.xml:system/etc/media_profiles.xml \
-    $(LOCAL_PATH)/configs/mtk_clear_motion.cfg:system/etc/mtk_clear_motion.cfg
-
-PRODUCT_PACKAGES += \
-   libmtk_symbols \
-   libgralloc_extra \
-   libstlport \
-   libgui_ext \
-   libui_ext
 
 # MTK Helpers 
 PRODUCT_PACKAGES += \
    libccci_util   \
-   libwvmsym
+   libmtk_symbols
 
 # Sensor Calibration
 PRODUCT_PACKAGES += libem_sensor_jni
-
-# Configure jemalloc for low memory
-MALLOC_SVELTE := true
 
 # Radio dependencies
 PRODUCT_PACKAGES += \
@@ -299,14 +300,24 @@ PRODUCT_PACKAGES += \
 # Display
 PRODUCT_PACKAGES += \
     libion
-
+    
 # GPS
 PRODUCT_PACKAGES += \
     gps.mt6795 \
-    libcurl \
-    YGPS
+    libcurl
 
 # Mediaserver with system group
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/etc/init/mediaserver.rc:system/etc/init/mediaserver.rc 
+    
+# camera legacy
+PRODUCT_PACKAGES += \
+    fs_config_files
+    
+PRODUCT_PACKAGES += \
+    EngineerMode  \
+    libm4u  \
+    libbwc  \
+ResurrectionOTA 
+
 

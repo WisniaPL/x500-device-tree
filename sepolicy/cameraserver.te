@@ -1,5 +1,10 @@
 # cameraserver - camera daemon
 allow cameraserver CAM_CAL_DRV_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_SHARP_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_OFILM_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_3L8_device:chr_file { read write open ioctl };
+allow cameraserver CAM_CAL_DRV_3L9_device:chr_file { read write open ioctl };
+allow cameraserver camera_sysram_device:chr_file { read write open ioctl };
 allow cameraserver camera_isp_device:chr_file { read write open ioctl };
 allow cameraserver camera_fdvt_device:chr_file { read write open ioctl };
 #allow cameraserver default_prop:property_service { set };	** need to change system/sepolicy, later **
@@ -10,7 +15,7 @@ allow cameraserver kd_camera_hw_device:chr_file { read write open ioctl };
 allow cameraserver kd_camera_flashlight_device:chr_file { read write open ioctl };
 allow cameraserver mediatek_prop:file { read open getattr };
 allow cameraserver mtk_sched_device:chr_file { read write open ioctl };
-allow cameraserver MTK_SMI_device:chr_file { read open ioctl };
+allow cameraserver MTK_SMI_device:chr_file rw_file_perms;
 allow cameraserver nvram_data_file:file { read open getattr };
 allow cameraserver proc:file { read open ioctl };
 allow cameraserver proc_meminfo:file { read open getattr };
@@ -28,3 +33,6 @@ allow cameraserver ccci_device:chr_file rw_file_perms;
 
 allow cameraserver camera_device:chr_file rw_file_perms;
 allow cameraserver sysfs_devinfo:file rw_file_perms;
+
+#bootmode
+allow cameraserver sysfs_bootmode:file r_file_perms;

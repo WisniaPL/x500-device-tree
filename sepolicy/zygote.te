@@ -67,6 +67,7 @@ allow zygote untrusted_app_tmpfs:file write;
 # Purpose : for TTLIA
 allow zygote radio:fd use;
 allow zygote radio_tmpfs:file create_file_perms;
+allow zygote serial_number_prop:file { getattr open read };
 
 # Nougat
 allow zygote persist_ril_prop:file { read open getattr };

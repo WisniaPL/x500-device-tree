@@ -433,3 +433,6 @@ allow mediaserver sw_sync_device:chr_file rw_file_perms;
 # Purpose : # Date : WK15.49
 # Purpose : nvram create file fail
 allow mediaserver kmsg_device:chr_file { write open };
+
+#bootmode
+allow mediaserver sysfs_bootmode:file r_file_perms;

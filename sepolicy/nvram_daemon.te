@@ -62,7 +62,7 @@ allow nvram_daemon init:unix_stream_socket connectto;
 allow nvram_daemon property_socket:sock_file write;
 #allow nvram_daemon sysfs:file write;
 allow nvram_daemon system_data_file:file { read open getattr };
-allow nvram_daemon self:capability { fowner chown dac_override fsetid };
+allow nvram_daemon self:capability { fowner chown dac_override dac_read_search fsetid };
 allow nvram_daemon system_data_file:dir { create write add_name };
 
 # Purpose: for backup
@@ -90,4 +90,6 @@ allow nvram_daemon rootfs:file r_file_perms;
 allow nvram_daemon toolbox_exec:file { r_file_perms execute execute_no_trans };
 #allow nvram_daemon default_prop:property_service set;
 allow nvram_daemon rootfs:lnk_file { getattr };
+allow nvram_daemon msensor_device:chr_file r_file_perms;
+unix_socket_connect(nvram_daemon, property, init) 
 

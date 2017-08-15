@@ -280,3 +280,6 @@ allow system_server goodixfingerprintd_device:chr_file rw_file_perms;
 
 # Smart Wake
 #allow system_server smartwake_sysfs:file rw_file_perms;
+
+# Persist
+allow system_server protect_s_data_file:dir r_dir_perms;

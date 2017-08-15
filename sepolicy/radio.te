@@ -199,4 +199,6 @@ allow radio sw_sync_device:chr_file ioctl;
 allow radio media_rw_data_file:dir search;
 allow radio proc_mtkcooler:dir search;
 allow radio proc_mtktz:dir search;
+allow radio ril_mux_report_case_prop:property_service set;
+allow radio ril_msim_power_prop:property_service set;
 

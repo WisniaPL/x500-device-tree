@@ -11,9 +11,12 @@ import init.trustonic.rc
 import init.ssd.rc
 import init.modem.rc	
 
-# init.modem.rc must be the LAST rc file because vold.post_fs_data_done is set in it
-# import init.modem.rc
-# *** DO NOT import the new rc file after this line ***
+on late-fs
+    # boot time fs tune
+    write /sys/block/mmcblk0/queue/iostats 0
+    write /sys/block/mmcblk0/queue/iosched/slice_idle 0
+    write /sys/block/mmcblk0/queue/read_ahead_kb 2048
+    write /sys/block/mmcblk0/queue/nr_requests 256
 
 on early-init
     mount debugfs debugfs /sys/kernel/debug
@@ -71,7 +74,7 @@ export LD_PRELOAD "libmtk_symbols.so"
 # mount different fs start
 
 on charger
-    mount ext4 /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/system /system ro wait
+    mount ext4 /dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/system /system ro
     start fuelgauged
     start kpoc_charger
     start servicemanager
@@ -108,6 +111,8 @@ on post-fs
 
     chown system system /protect_s
     chmod 0770 /protect_s
+mkdir /protect_s/properties 0770 system system
+
     # once everything is setup, no need to modify /
     mount rootfs rootfs / ro remount
 
@@ -168,6 +173,7 @@ on post-fs-data
 
     # mxg2320
     mkdir /data/mxg2320 0770 root system
+
     # mmc3524x
     mkdir /data/mmc3524x 0770 root system
     chmod 0660 /data/misc/wifi/p2p_supplicant.conf
@@ -339,7 +345,7 @@ on post-fs-data
     #Accdet
     chown root radio /sys/devices/platform/Accdet_Driver/driver/accdet_call_state
     #VideoCodec
-    chmod 0660 /dev/Vcodec
+    chmod 0666 /dev/Vcodec
     chown media system /dev/Vcodec
 
     #MJC
@@ -473,6 +479,9 @@ on post-fs-data
     chmod 0660 /dev/mtk_disp_mgr
     chown system graphics /dev/mtk_disp_mgr
 
+chmod 0660 /sys/devices/platform/mtk_disp_mgr.0/rgb
+    chown system system /sys/devices/platform/mtk_disp_mgr.0/rgb
+
     chmod 0660 /dev/mtkfb_vsync
     chown system graphics /dev/mtkfb_vsync
 
@@ -529,7 +538,7 @@ on post-fs-data
     chown media media /sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario
 
     # SMI
-    chmod 0660 /dev/MTK_SMI
+    chmod 0666 /dev/MTK_SMI
     chown media media /dev/MTK_SMI
 
     # RRC
@@ -753,6 +762,13 @@ on boot
     chmod 0660 /dev/ttyGS3
     chown system radio /dev/ttyGS3
 
+on property:sys.boot_completed=1
+    # end boot time fs tune
+    write /sys/block/mmcblk0/queue/read_ahead_kb 128
+    write /sys/block/mmcblk0/queue/nr_requests 128
+    write /sys/block/mmcblk0/queue/iostats 1
+
+
 on property:vold.decrypt=trigger_reset_main
     start stop_modem
     setprop service.nvram_init 0
@@ -894,11 +910,6 @@ service audio-daemon /system/bin/audiocmdservice_atci
 
 service pq /system/bin/pq
     class core
-    user system
-    group system graphics
-
-service aal /system/bin/aal
-    class main
     user system
     group system graphics
 
@@ -1241,7 +1252,6 @@ service mxg2320d /system/bin/mxg2320d
     user system
     group system
     class main
-    ##disabled
 
 service bmm050d /system/bin/bmm050d
     disabled
@@ -1399,9 +1409,3 @@ service guiext-server /system/bin/guiext-server
 service kpoc_charger /system/bin/kpoc_charger
     class charger
 
-# Program binary service
-service program_binary /system/bin/program_binary_service
-    class late_start
-    user system
-    group graphics
-    oneshot

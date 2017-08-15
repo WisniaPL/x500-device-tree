@@ -1,5 +1,5 @@
 #
-# system.prop for LeTV x500
+# system.prop for LeEco Le 1s
 #
 # MTK, Infinity, 20090720 {
 wifi.interface=wlan0
@@ -105,7 +105,6 @@ dalvik.vm.mtk-stack-trace-file=/data/anr/mtk_traces.txt
 mediatek.wlan.chip=MT6630
 mediatek.wlan.module.postfix=_mt6630
 ril.radiooff.poweroffMD=0
-ro.frp.pst=/dev/block/platform/mtk-msdc.0/11230000.MSDC0/by-name/frp
 ro.mediatek.version.branch=alps-mp-m0.mp11
 ro.mediatek.version.sdk=4
 bt.profiles.dun.enabled=1
@@ -195,8 +194,12 @@ persist.radio.mobile.data=0,0
 persist.meta.dumpdata=0
 ro.mtk_md_sbp_custom_value=0
 persist.power.useautobrightadj=true
-ro.frp.pst=/dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/frp
 ro.com.android.dataroaming=true
 ro.telephony.ril_class=MT6795
 ro.hardware=mt6795
-
+#ro.build.system_root_image=true
+media.stagefright.legacyencoder=true
+media.stagefright.less-secure=true
+# ClearMotion
+persist.sys.display.clearMotion=1
+ro.mtk_clearmotion_support=1

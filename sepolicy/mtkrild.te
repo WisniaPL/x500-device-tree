@@ -7,7 +7,7 @@
 # ==============================================
 
 type mtkrild_exec , exec_type, file_type;
-type mtkrild ,domain;
+type mtkrild ,domain, domain_deprecated;
 
 
 # ==============================================
@@ -18,8 +18,7 @@ init_daemon_domain(mtkrild)
 net_domain(mtkrild)
 allow mtkrild self:netlink_route_socket nlmsg_write;
 allow mtkrild kernel:system module_request;
-#unix_socket_connect(mtkrild, property, init) #@daniel, use set_prop()
-#set_prop(mtkrild, init)
+unix_socket_connect(mtkrild, property, init) 
 allow mtkrild self:capability { setuid net_admin net_raw };
 allow mtkrild alarm_device:chr_file rw_file_perms;
 allow mtkrild cgroup:dir create_dir_perms;
@@ -103,4 +102,5 @@ allow mtkrild proc:file { open read write };
 allow mtkrild ril_mux_report_case_prop:file { read open getattr };
 allow mtkrild sysfs:file { read open };
 allow mtkrild rootfs:lnk_file { getattr };
+allow mtkrild serial_number_prop:property_service set;
 

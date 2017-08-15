@@ -24,5 +24,17 @@ index 915d159a5..0666e4d63 100644
 -- 
 2.11.0
 
+diff --git a/liblog/logger_write.c b/liblog/logger_write.c
+index c7b5a84..6184e04 100644
+--- a/liblog/logger_write.c
++++ b/liblog/logger_write.c
+@@ -401,6 +401,7 @@ LIBLOG_ABI_PUBLIC int __android_log_buf_write(int bufID, int
+         !strncmp(tag, "IMS", 3) || /* Any log tag with "IMS" as the prefix */
+         !strcmp(tag, "AT") ||
+         !strcmp(tag, "GSM") ||
++        !strcmp(tag, "ccci_fsd") ||
+         !strcmp(tag, "STK") ||
+         !strcmp(tag, "CDMA") ||
+         !strcmp(tag, "PHONE") ||
 
 

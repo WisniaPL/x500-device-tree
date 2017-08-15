@@ -1,12 +1,11 @@
--include vendor/LeTV/x500/BoardConfigVendor.mk
+-include vendor/LeEco/X3/BoardConfigVendor.mk
 
-LOCAL_PATH := device/LeTV/x500
+LOCAL_PATH := device/LeEco/X3
 
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 MTK_K64_SUPPORT := yes
 USE_CAMERA_STUB := true
-#TARGET_PROVIDES_INIT_RC := true
 
 ARCH_ARM_HAVE_TLS_REGISTER := true
 TARGET_NO_BOOTLOADER := true
@@ -14,7 +13,6 @@ TARGET_NO_BOOTLOADER := true
 
 TARGET_BOARD_PLATFORM := mt6795
 
-#TARGET_LDPRELOAD += libxlog.so
 # CPU
 ifeq ($(FORCE_32_BIT),true)
 TARGET_ARCH := arm
@@ -47,35 +45,24 @@ TARGET_BOOTLOADER_BOARD_NAME := mt6795
 
 # EXT4
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_SPARSE_EXT_DISABLED := false
-BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE := ext4
+TARGET_USERIMAGES_USE_F2FS := true
 
 # MTK Hardware
-#BOARD_USES_MTK_HARDWARE := true
 BOARD_HAS_MTK_HARDWARE := true
 MTK_HARDWARE := true
-#BOARD_USES_LEGACY_MTK_AV_BLOB := true
-#COMMON_GLOBAL_CFLAGS += -DMTK_HARDWARE -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL -DDISABLE_ASHMEM_TRACKING
-#COMMON_GLOBAL_CFLAGS += -DMTK_AOSP_ENHANCEMENT
-#COMMON_GLOBAL_CPPFLAGS += -DMTK_AOSP_ENHANCEMENT
-#COMMON_GLOBAL_CPPFLAGS += -DMTK_HARDWARE
 TARGET_KMODULES := true
-#BOARD_GLOBAL_CFLAGS += -DADD_LEGACY_ACQUIRE_BUFFER_SYMBOL
 BOARD_GLOBAL_CFLAGS += -DCOMPAT_SENSORS_M
-# Flags
-#TARGET_GLOBAL_CFLAGS   += -mfpu=neon -mfloat-abi=softfp
-#TARGET_GLOBAL_CPPFLAGS += -mfpu=neon -mfloat-abi=softfp
 BOARD_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-#BOARD_GLOBAL_CFLAGS += -DDISABLE_HW_ID_MATCH_CHECK
 BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
 BOARD_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
 BOARD_DISABLE_HW_ID_MATCH_CHECK := true;
+#BOARD_GLOBAL_CFLAGS += -Wno-gnu-array-member-paren-init
 
 # Kernel
 
 TARGET_USES_64_BIT_BINDER := true
 TARGET_IS_64_BIT := true
-BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 androidboot.selinux=permissive
+BOARD_KERNEL_CMDLINE := bootopt=64S3,32N2,64N2 androidboot.selinux=permissive androidboot.verifiedbootstate=green
 BOARD_KERNEL_BASE := 0x40078000
 BOARD_KERNEL_PAGESIZE := 2048
 BOARD_MKBOOTIMG_ARGS := \
@@ -131,8 +118,7 @@ BOARD_CONNECTIVITY_VENDOR := MediaTek
 USE_XML_AUDIO_POLICY_CONF := 1
 
 # RIL
-#BOARD_PROVIDES_RILD := true
-BOARD_RIL_CLASS := ../../../device/LeTV/x500/ril
+BOARD_RIL_CLASS := ../../../device/LeEco/X3/ril
 BOARD_CONNECTIVITY_MODULE := conn_soc
 
 # Display
@@ -143,7 +129,7 @@ TARGET_RUNNING_WITHOUT_SYNC_FRAMEWORK := true
 # CMHW
 BOARD_USES_CYANOGEN_HARDWARE := true
 BOARD_HARDWARE_CLASS := $(LOCAL_PATH)/cmhw
-#TARGET_TAP_TO_WAKE_NODE := "/sys/bus/i2c/devices/i2c-2/2-004b/wake_gesture_enable"
+#TARGET_TAP_TO_WAKE_NODE := "/sys/devices/bus.2/11009000.I2C2/i2c-2/2-004b/input/input4/wake_gesture"
 
 # Wifi
 WPA_SUPPLICANT_VERSION := VER_0_8_X
@@ -176,16 +162,56 @@ BOARD_BOOTIMAGE_PARTITION_SIZE := 20971520
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 20971520
 BOARD_FLASH_BLOCK_SIZE := 4096
 
-# CWM
+# Recovery
+# Uncomment RECOVERY_VARIANT to build twrp
+#RECOVERY_VARIANT=twrp
+
 TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/ramdisk/recovery.fstab
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/class/android_usb/android0/f_mass_storage/lun/file
+
+BOARD_HAS_NO_SELECT_BUTTON := true
+
+# TWRP stuff
+ifeq ($(RECOVERY_VARIANT), twrp)
+BOARD_SUPPRESS_SECURE_ERASE := true
+TW_INCLUDE_CRYPTO := true
+TW_NO_REBOOT_BOOTLOADER := true
+TW_USE_MODEL_HARDWARE_ID_FOR_DEVICE_ID := true
+
+TW_USE_TOOLBOX := true
+BOARD_USE_FRAMEBUFFER_ALPHA_CHANNEL := true
+TARGET_DISABLE_TRIPLE_BUFFERING := false
+DEVICE_RESOLUTION := 1080x1920
+DEVICE_SCREEN_WIDTH := 1080
+DEVICE_SCREEN_HEIGHT := 1920
+RECOVERY_GRAPHICS_USE_LINELENGTH := true
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
+TW_MAX_BRIGHTNESS := 255
+TW_THEME := portrait_hdpi
+
+TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
+TW_CUSTOM_CPU_TEMP_PATH := /sys/devices/virtual/thermal/thermal_zone1/temp
+TARGET_RECOVERY_LCD_BACKLIGHT_PATH := \"/sys/class/leds/lcd-backlight/brightness\"
+
+RECOVERY_SDCARD_ON_DATA := true
+TW_NO_USB_STORAGE := true
+TW_INTERNAL_STORAGE_PATH := "/data/media"
+TW_INTERNAL_STORAGE_MOUNT_POINT := "data"
+
+else
+# CWM
+BOARD_RECOVERY_SWIPE := true
+BOARD_SUPPRESS_EMMC_WIPE := true
+BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
+TARGET_RECOVERY_PIXEL_FORMAT := "RGBA_8888"
+endif
 
 # system.prop
 TARGET_SYSTEM_PROP := $(LOCAL_PATH)/system.prop
 
 # SELinux
 BOARD_SEPOLICY_DIRS := \
-    device/LeTV/x500/sepolicy
+    device/LeEco/X3/sepolicy
 
 # Seccomp Filter
 BOARD_SECCOMP_POLICY := \
@@ -194,16 +220,31 @@ BOARD_SECCOMP_POLICY := \
 # Legacy blobs
 TARGET_NEEDS_TEXT_RELOCATIONS := true 
 
-BOARD_MEDIATEK_USES_GPS := true
-
-# Keystore
-#TARGET_PROVIDES_KEYMASTER := true
-
 # Camera
-#TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+TARGET_HAS_LEGACY_CAMERA_HAL1 := true
+TARGET_CAMERASERVICE_CLOSES_NATIVE_HANDLES := true
 
+# Charger
+BACKLIGHT_PATH := /sys/class/leds/lcd-backlight/brightness
+BOARD_RED_LED_PATH	:= "/sys/class/leds/red"
+BOARD_GREEN_LED_PATH	:= "/sys/class/leds/green"
+BOARD_BLUE_LED_PATH	:= "/sys/class/leds/blue"
+
+# SU
+#export WITH_SU=true
+
+# Tethering
+PRODUCT_PROPERTY_OVERRIDES += \
+    net.tethering.noprovisioning=true
+# faster Bootanimation
+TARGET_BOOTANIMATION_HALF_RES := true
+
+# This is needed for us as it disables tcache, which is breaking camera.
+MALLOC_SVELTE := true
+BOARD_GLOBAL_CFLAGS += -DDECAY_TIME_DEFAULT=0
+#BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
 #Hack for prebuilt kernel
-ifeq ($(TARGET_DEVICE),x500)
+ifeq ($(TARGET_DEVICE),X3)
 $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
 $(shell touch $(OUT)/obj/KERNEL_OBJ/usr/export_includes)
 endif

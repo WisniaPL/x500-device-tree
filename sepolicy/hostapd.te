@@ -17,3 +17,4 @@ allow hostapd wifi_data_file:sock_file write;
 
 # Nougat
 allow hostapd wifi_data_file:sock_file write;
+allow hostapd unlabeled:file read;

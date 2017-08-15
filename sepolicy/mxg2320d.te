@@ -24,5 +24,6 @@ type mxg2320d ,domain;
 #permissive msensord;
 init_daemon_domain(mxg2320d)
 #unconfined_domain(mxg2320d)
-
+allow mxg2320d msensor_device:chr_file rw_file_perms;
+allow mxg2320d gsensor_device:chr_file rw_file_perms;
 
