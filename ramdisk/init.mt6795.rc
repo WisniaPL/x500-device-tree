@@ -4,7 +4,6 @@ import init.project.rc
 
 
 
-import init.volte.rc
 import init.mal.rc
 import init.trustonic.rc
 
@@ -228,6 +227,7 @@ on post-fs-data
     chown root diag /sys/module/tpd_setting/parameters/tpd_em_asamp
     chown root diag /sys/module/tpd_debug/parameters/tpd_em_log
     chown root diag /sys/module/tpd_debug/parameters/tpd_em_log_to_fs
+    write /sys/board_properties/tpd_suspend_status 2
 
     chmod 0660 /dev/pmem_multimedia
     chown system media /dev/pmem_multimedia
@@ -521,6 +521,10 @@ chmod 0660 /sys/devices/platform/mtk_disp_mgr.0/rgb
     chown system camera /dev/LC898122OFILMAF
     chown system camera /dev/BU6429AF
     chown system camera /dev/LC898217AF
+	
+	# IO Scheduler
+    chown system system /sys/block/mmcblk0/queue/scheduler
+    chmod 0660 /sys/block/mmcblk0/queue/scheduler
 
     #MATV
     chmod 0660 /dev/MATV
