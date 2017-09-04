@@ -33,13 +33,6 @@
 # WIFI
 /dev/wmtWifi              0660   system     system
 
-# FMRadio
-/dev/fm                   0660   media     media
-
-# NFC
-/dev/msr3110              0666   root       root
-/dev/mt6605               0660   nfc        radio
-
 # MTK BTIF driver
 /dev/btif                 0600   system     system
 
@@ -117,4 +110,13 @@
 
 #Add Wake Gestures @Bule 20161123
 /sys/bus/i2c/devices/i2c-2/2-004b/*       0664  system   system
+
+/dev/random               0666   root       root
+/dev/urandom              0666   root       root
+/dev/erandom              0666   root       root
+/dev/frandom              0666   root       root
+# Make HW RNG readable by group system to let EntropyMixer read it.
+/dev/hw_random            0440   root       system
+/dev/ashmem               0666   root       root
+/dev/binder 0666 root root
 
