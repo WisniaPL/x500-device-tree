@@ -53,7 +53,6 @@ MTK_HARDWARE := true
 TARGET_KMODULES := true
 BOARD_GLOBAL_CFLAGS += -DCOMPAT_SENSORS_M
 BOARD_GLOBAL_CFLAGS += -DNO_SECURE_DISCARD
-BOARD_GLOBAL_CFLAGS += -DDISABLE_ASHMEM_TRACKING
 BOARD_GLOBAL_CFLAGS += -DCAMERA_VENDOR_L_COMPAT
 BOARD_DISABLE_HW_ID_MATCH_CHECK := true;
 #BOARD_GLOBAL_CFLAGS += -Wno-gnu-array-member-paren-init
@@ -146,7 +145,6 @@ WIFI_DRIVER_FW_PATH_P2P := P2P
 MTK_BT_SUPPORT := yes
 BOARD_HAVE_BLUETOOTH := true
 BOARD_HAVE_BLUETOOTH_MTK := true
-BOARD_BLUETOOTH_DOES_NOT_USE_RFKILL := true
 BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
 
 # GPS
@@ -233,9 +231,6 @@ BOARD_BLUE_LED_PATH	:= "/sys/class/leds/blue"
 # SU
 #export WITH_SU=true
 
-# Tethering
-PRODUCT_PROPERTY_OVERRIDES += \
-    net.tethering.noprovisioning=true
 # faster Bootanimation
 TARGET_BOOTANIMATION_HALF_RES := true
 
@@ -249,3 +244,15 @@ $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
 $(shell touch $(OUT)/obj/KERNEL_OBJ/usr/export_includes)
 endif
 
+# Google properties overides
+PRODUCT_PROPERTY_OVERRIDES += \
+keyguard.no_require_sim=true \
+ro.url.legal=http://www.google.com/intl/%s/mobile/android/basic/phone-legal.html \
+ro.url.legal.android_privacy=http://www.google.com/intl/%s/mobile/android/basic/privacy.html \
+ro.com.google.clientidbase=android-google \
+ro.com.android.wifi-watchlist=GoogleGuest \
+ro.error.receiver.system.apps=com.google.android.gms \
+ro.setupwizard.enterprise_mode=1 \
+ro.com.android.dataroaming=false \
+net.tethering.noprovisioning=true \
+ro.setupwizard.rotation_locked=true
