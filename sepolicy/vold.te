@@ -150,3 +150,12 @@ allow vold protect1_device:blk_file rw_file_perms;
 allow vold protect2_device:blk_file rw_file_perms;
 allow vold zram0_device:blk_file getattr;
 allow vold cache_block_device:blk_file rw_file_perms;
+
+# Nougat
+allow vold init:fd use;
+allow vold null_device:chr_file { read write open };
+allow vold self:unix_stream_socket { read write };
+allow vold urandom_device:chr_file { read getattr ioctl open };
+allow vold properties_device:dir getattr;
+allow vold property_contexts:file { getattr read open };
+allow vold properties_serial:file { getattr read open };

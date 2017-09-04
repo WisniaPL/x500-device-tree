@@ -419,11 +419,6 @@ allow mediaserver vtservice:fd use;
 # Purpose : allow mediaserver to find pq_service
 allow mediaserver pq_service:service_manager { find };
 
-# Nougat
-allow mediaserver proc:file { read open ioctl };
-allow mediaserver sysfs:file { read open };
-
-
 # Purpose : # Date : WK15.42
 # Operation : Migration
 # Purpose : RGX 1.5 DDK requires client to have fifo R/W and sync_device permission
@@ -435,4 +430,21 @@ allow mediaserver sw_sync_device:chr_file rw_file_perms;
 allow mediaserver kmsg_device:chr_file { write open };
 
 #bootmode
-allow mediaserver sysfs_bootmode:file r_file_perms;
+allow mediaserver sysfs_boot_mode:file r_file_perms;
+
+# Nougat
+allow mediaserver proc:file { read open ioctl };
+allow mediaserver sysfs:file { read open };
+allow mnld apk_data_file:file { open read write create getattr };
+allow mnld rootfs:lnk_file { getattr };
+allow mnld storage_file:lnk_file { read };
+allow mnld mnt_user_file:lnk_file { read };
+allow mnld mnt_user_file:dir { search };
+allow mnld system_data_file:file { open read getattr };
+allow mnld wmt_prop:file r_file_perms;
+allow mediaserver device:chr_file { ioctl };
+allow mediaserver mediatek_prop:file { read open getattr };
+allow mediaserver sysfs_devinfo:file r_file_perms;
+
+# mediadrmserver policy
+allow mediadrmserver rootfs:lnk_file { getattr };

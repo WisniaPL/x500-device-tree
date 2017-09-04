@@ -15,3 +15,4 @@ allow ccci_fsd protect_s_data_file:file create_file_perms;
 allow ccci_fsd sysfs_ccci:file rw_file_perms;
 allow ccci_fsd sysfs_ccci:dir search;
 allow ccci_fsd sysfs_wake_lock:file rw_file_perms;
+allow ccci_fsd nvdata_file:lnk_file r_file_perms;

@@ -61,7 +61,6 @@ allow factory graphics_device:chr_file { read write ioctl open };
 allow factory gsensor_device:chr_file { read ioctl open };
 allow factory gsm0710muxd_device:chr_file { read write ioctl open };
 allow factory gyroscope_device:chr_file { read ioctl open };
-allow factory init:unix_stream_socket connectto;
 allow factory input_device:chr_file { read ioctl open };
 allow factory input_device:dir { read open };
 allow factory kd_camera_flashlight_device:chr_file { read write ioctl open };
@@ -125,7 +124,6 @@ allow factory shell_exec:file execute;
 allow factory MT_pmic_adc_cali_device:chr_file { read write ioctl open};
 allow factory audio_device:dir search;
 allow factory nvram_data_file:dir search;
-allow factory audiohal_prop:property_service set;
 allow factory pmic_ftm_device:chr_file { read write ioctl open};
 allow factory powerctl_prop:property_service set;
 allow factory ttyGS_device:chr_file { read write open ioctl};
@@ -134,6 +132,7 @@ allow factory irtx_device:chr_file { read write ioctl open };
 allow factory devpts:chr_file { read write getattr ioctl };
 allow factory vfat:dir search;
 allow factory hrm_device:chr_file { read ioctl open };
+set_prop(factory, audiohal_prop)
 
 # Date: WK14.47
 # Operation : Migration

@@ -25,6 +25,7 @@ allow cameraserver rootfs:lnk_file { getattr };
 allow cameraserver sensorservice_service:service_manager { find };
 allow cameraserver sysfs:file { read write open getattr };
 allow cameraserver system_server:unix_stream_socket { read write connectto };
+allow cameraserver sysfs_membw:file rw_file_perms;
 
 # nvram
 allow cameraserver nvdata_file:dir rw_dir_perms;
@@ -35,4 +36,5 @@ allow cameraserver camera_device:chr_file rw_file_perms;
 allow cameraserver sysfs_devinfo:file rw_file_perms;
 
 #bootmode
-allow cameraserver sysfs_bootmode:file r_file_perms;
+#allow cameraserver sysfs_bootmode:file r_file_perms;
+allow cameraserver sysfs_ddr_type:file r_file_perms;

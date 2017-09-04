@@ -14,4 +14,4 @@ allow audioserver init:unix_stream_socket { connectto };
 allow audioserver nvdata_file:dir search;
 allow audioserver nvdata_file:file getattr;
 allow audioserver platformblk_device:dir search;
-
+allow audioserver nvdata_file:lnk_file r_file_perms;

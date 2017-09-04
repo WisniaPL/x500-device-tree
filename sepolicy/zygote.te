@@ -71,4 +71,5 @@ allow zygote serial_number_prop:file { getattr open read };
 
 # Nougat
 allow zygote persist_ril_prop:file { read open getattr };
+allow zygote sysfs_devinfo:file r_file_perms;
 

@@ -45,7 +45,7 @@ allow nvram_daemon mtk_wifi_prop:property_service set;
 allow nvram_daemon shell_exec:file { x_file_perms read open };
 allow nvram_daemon nvram_data_file:dir create_dir_perms;
 allow nvram_daemon nvram_data_file:file create_file_perms;
-allow nvram_daemon nvram_data_file:lnk_file read;
+allow nvram_daemon nvdata_file:lnk_file r_file_perms;
 allow nvram_daemon nvdata_file:dir create_dir_perms;
 allow nvram_daemon nvdata_file:file create_file_perms;
 
@@ -69,8 +69,6 @@ allow nvram_daemon system_data_file:dir { create write add_name };
 allow nvram_daemon nvram_device:chr_file {read write open ioctl};
 allow nvram_daemon pro_info_device:chr_file {read write open ioctl};
 
-allow nvram_daemon block_device:dir search;
-
 # Purpose: for nand project
 allow nvram_daemon mtd_device:dir search;
 allow nvram_daemon mtd_device:chr_file { read write open };
@@ -87,9 +85,10 @@ allow nvram_daemon proc_lk_env:file { read write ioctl open };
 allow nvram_daemon sysfs:file { write read open };
 allow nvram_daemon rootfs:dir { read open };
 allow nvram_daemon rootfs:file r_file_perms;
-allow nvram_daemon toolbox_exec:file { r_file_perms execute execute_no_trans };
+allow nvram_daemon toolbox_exec:file rx_file_perms;
 #allow nvram_daemon default_prop:property_service set;
 allow nvram_daemon rootfs:lnk_file { getattr };
 allow nvram_daemon msensor_device:chr_file r_file_perms;
-unix_socket_connect(nvram_daemon, property, init) 
-
+set_prop(nvram_daemon, nvram_prop)
+set_prop(nvram_daemon, wmt_prop) 
+allow nvram_daemon block_device:dir search;

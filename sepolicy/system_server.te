@@ -255,7 +255,7 @@ allow system_server nvram_agent_service:service_manager find;
 # Package: com.mediatek.multiwindow.service
 allow system_server mtk_mwblacklist_service:service_manager find;
 
-allow system_server debugfs:dir { read open };
+allow system_server debugfs:dir r_file_perms;
 allow system_server unlabeled:file unlink;
 allow system_server wmt_prop:file { read open getattr };
 # Purpose : RGX 1.5 DDK requires client to have fifo R/W and sync_device permission

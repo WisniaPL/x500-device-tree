@@ -104,3 +104,8 @@ allow init ccci_device:chr_file { write ioctl };
 allow init devpts:chr_file ioctl;
 allow init perf_control_sysfs:file getattr;
 allow init wmtWifi_device:chr_file write;
+allow init null_device:chr_file { read write };
+allow init properties_serial:file { getattr read open };
+allow init self:file write;
+allow init self:unix_stream_socket { accept getopt listen read write };
+allow init self:fd use;

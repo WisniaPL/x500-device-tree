@@ -7,7 +7,9 @@ allow mediacodec sysfs:file { read write open };
 allow mediacodec proc:file { ioctl getattr open read };
 allow mediacodec rootfs:lnk_file { getattr };
 allow mediacodec camera_device:chr_file { read open ioctl };
-
+allow mediacodec property_socket:sock_file write;
+allow mediacodec init:unix_stream_socket connectto;
+ 
 # nvram
 allow mediacodec nvdata_file:dir rw_dir_perms;
 allow mediacodec nvdata_file:file create_file_perms;
@@ -21,7 +23,7 @@ allow mediacodec sysfs_devinfo:file { open read write };
 allow mediacodec M4U_device_device:chr_file rw_file_perms;
 
 #bootmode
-allow mediacodec sysfs_bootmode:file r_file_perms;
+allow mediacodec sysfs_boot_mode:file r_file_perms;
 
 # proc/meminfo
 allow mediacodec proc_meminfo:file { getattr open read };

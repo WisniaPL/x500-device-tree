@@ -5,7 +5,7 @@
 # ==============================================
 # Type Declaration
 # ==============================================
-type thermalloadalgod ,domain;
+type thermalloadalgod, domain, domain_deprecated;
 type thermalloadalgod_exec , exec_type, file_type;
 
 

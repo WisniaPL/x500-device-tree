@@ -366,11 +366,11 @@
 # System files
 #
 /system/app/mcRegistry(/.*)? u:object_r:mobicore_data_file:s0
-/system/bin/6620_launcher u:object_r:mtk_6620_launcher_exec:s0
+/(system|system\/vendor|vendor)/bin/6620_launcher u:object_r:mtk_6620_launcher_exec:s0
 /system/bin/stp_dump3 u:object_r:stp_dump3_exec:s0
 /system/bin/aal u:object_r:aal_exec:s0
 /system/bin/aee_core_forwarder u:object_r:aee_core_forwarder_exec:s0
-/system/bin/akmd09911 u:object_r:akmd09911_exec:s0
+/(system|system\/vendor|vendor)/bin/akmd09911                                           u:object_r:akmd09911_exec:s0
 /system/bin/akmd09912 u:object_r:akmd09912_exec:s0
 /system/bin/akmd8963 u:object_r:akmd8963_exec:s0
 /system/bin/akmd8975 u:object_r:akmd8975_exec:s0
@@ -385,8 +385,8 @@
 /system/bin/bmm056d u:object_r:bmm056d_exec:s0
 /system/bin/boot_logo_updater u:object_r:boot_logo_updater_exec:s0
 /system/bin/br_app_data_service u:object_r:br_app_data_service_exec:s0
-/system/bin/ccci_fsd u:object_r:ccci_fsd_exec:s0
-/system/bin/ccci_mdinit u:object_r:ccci_mdinit_exec:s0
+/(system|system\/vendor|vendor)/bin/ccci_fsd                                            u:object_r:ccci_fsd_exec:s0
+/(system|system\/vendor|vendor)/bin/ccci_mdinit                                         u:object_r:ccci_mdinit_exec:s0
 /system/bin/ccci_rpcd u:object_r:ccci_rpcd_exec:s0
 /system/bin/dhcp6c u:object_r:dhcp6c_exec:s0
 /system/bin/dm_agent_binder u:object_r:dm_agent_binder_exec:s0
@@ -395,17 +395,17 @@
 /system/bin/eemcs_fsd u:object_r:eemcs_fsd_exec:s0
 /system/bin/eemcs_mdinit u:object_r:eemcs_mdinit_exec:s0
 /system/bin/emdlogger[0-9]+ u:object_r:emdlogger_exec:s0
-/system/bin/em_svr u:object_r:em_svr_exec:s0
-/system/bin/factory u:object_r:factory_exec:s0
+/(system|system\/vendor|vendor)/bin/em_svr                                              u:object_r:em_svr_exec:s0
+/(system|system\/vendor|vendor)/bin/factory                                             u:object_r:factory_exec:s0
 /system/bin/flashlessd u:object_r:flashlessd_exec:s0
-/system/bin/fuelgauged u:object_r:fuelgauged_exec:s0
+/(system|system\/vendor|vendor)/bin/fuelgauged                                          u:object_r:fuelgauged_exec:s0
 /system/bin/ged_srv u:object_r:ged_srv_exec:s0
 /system/bin/gas_srv    u:object_r:gas_srv_exec:s0
-/system/bin/kpoc_charger u:object_r:kpoc_charger_exec:s0
+/(system|system\/vendor|vendor)/bin/kpoc_charger                                        u:object_r:kpoc_charger_exec:s0
 /system/bin/geomagneticd u:object_r:geomagneticd_exec:s0
 /system/bin/GoogleOtaBinder u:object_r:GoogleOtaBinder_exec:s0
 /system/bin/gsm0710muxdmd2 u:object_r:gsm0710muxdmd2_exec:s0
-/system/bin/gsm0710muxd u:object_r:gsm0710muxd_exec:s0
+/(system|system\/vendor|vendor)/bin/gsm0710muxd                                         u:object_r:gsm0710muxd_exec:s0
 /system/bin/guiext-server u:object_r:guiext-server_exec:s0
 /system/bin/icusbd u:object_r:icusbd_exec:s0
 /system/bin/init.gprs-pppd u:object_r:zpppd_gprs_exec:s0
@@ -418,7 +418,7 @@
 /system/bin/mdlogger u:object_r:mdlogger_exec:s0
 /system/bin/memsicd3416x u:object_r:memsicd3416x_exec:s0
 /system/bin/memsicd u:object_r:memsicd_exec:s0
-/system/bin/meta_tst u:object_r:meta_tst_exec:s0
+/(system|system\/vendor|vendor)/bin/meta_tst                                            u:object_r:meta_tst_exec:s0
  
 /system/bin/mmc_ffu u:object_r:mmc_ffu_exec:s0
 /system/bin/emmc_rw_debug u:object_r:emmc_rw_debug_exec:s0
@@ -426,22 +426,22 @@
 /system/bin/mmp u:object_r:mmp_exec:s0
 /system/bin/mobile_log_d u:object_r:mobile_log_d_exec:s0
 /system/bin/mpud6050 u:object_r:mpud6050_exec:s0
-/system/bin/msensord u:object_r:msensord_exec:s0
-/system/bin/mtk_agpsd u:object_r:mtk_agpsd_exec:s0
+/(system|system\/vendor|vendor)/bin/msensord                                            u:object_r:msensord_exec:s0
+/(system|system\/vendor|vendor)/bin/mtk_agpsd                                           u:object_r:mtk_agpsd_exec:s0
 /system/bin/MtkCodecService u:object_r:MtkCodecService_exec:s0
 /system/bin/mtkrildmd2 u:object_r:mtkrildmd2_exec:s0
-/system/bin/mtkrild u:object_r:mtkrild_exec:s0
-/system/bin/muxreport u:object_r:muxreport_exec:s0
+/(system|system\/vendor|vendor)/bin/mtkrild                                             u:object_r:mtkrild_exec:s0
+/(system|system\/vendor|vendor)/bin/muxreport                                           u:object_r:muxreport_exec:s0
 /system/bin/netdiag u:object_r:netdiag_exec:s0
 /system/bin/nvram_agent_binder u:object_r:nvram_agent_binder_exec:s0
-/system/bin/nvram_daemon u:object_r:nvram_daemon_exec:s0
+/(system|system\/vendor|vendor)/bin/nvram_daemon                                        u:object_r:nvram_daemon_exec:s0
 /system/bin/orientationd u:object_r:orientationd_exec:s0
 /system/bin/permission_check u:object_r:permission_check_exec:s0
 /system/bin/poad u:object_r:poad_exec:s0
 /system/bin/ppl_agent u:object_r:ppl_agent_exec:s0
 /system/bin/pppd_dt u:object_r:pppd_dt_exec:s0
 /system/bin/pppd_via u:object_r:pppd_via_exec:s0
-/system/bin/pq u:object_r:pq_exec:s0
+/(system|system\/vendor|vendor)/bin/pq                                                  u:object_r:pq_exec:s0
 /system/bin/program_binary_service u:object_r:program_binary_exec:s0
 /system/bin/resize2fs  --  u:object_r:resize_exec:s0
 /system/bin/resize_ext4  --  u:object_r:resize_exec:s0
@@ -451,9 +451,9 @@
 /system/bin/slpd u:object_r:slpd_exec:s0
 /system/bin/sn u:object_r:sn_exec:s0
 /system/bin/statusd u:object_r:statusd_exec:s0
-/system/bin/terservice u:object_r:terservice_exec:s0
+/(system|system\/vendor|vendor)/bin/terservice                                          u:object_r:terservice_exec:s0
 /system/bin/thermald u:object_r:thermald_exec:s0
-/system/bin/thermal_manager u:object_r:thermal_manager_exec:s0
+/(system|system\/vendor|vendor)/bin/thermal_manager                                     u:object_r:thermal_manager_exec:s0
 /system/bin/thermalloadalgod u:object_r:thermalloadalgod_exec:s0  
 /system/bin/thermal u:object_r:thermal_exec:s0
 /system/bin/tiny_mkswap u:object_r:tiny_mkswap_exec:s0
@@ -465,16 +465,16 @@
 /system/bin/volte_ua u:object_r:volte_ua_exec:s0
 /system/bin/wfca u:object_r:wfca_exec:s0
 /system/bin/mtkmal u:object_r:mtkmal_exec:s0
-/system/bin/wifi2agps u:object_r:wifi2agps_exec:s0
-/system/bin/wmt_loader u:object_r:wmt_loader_exec:s0
+/(system|system\/vendor|vendor)/bin/wifi2agps                                           u:object_r:wifi2agps_exec:s0
+/(system|system\/vendor|vendor)/bin/wmt_loader                                          u:object_r:wmt_loader_exec:s0
 /system/bin/xlog u:object_r:xlog_exec:s0
 /system/bin/sbchk u:object_r:sbchk_exec:s0
 /system/bin/OperaMaxSystem u:object_r:tunman_exec:s0
 /system/etc/sensor(/.*)?	u:object_r:system_sensor_data_file:s0
 /system/vendor/bin/pvrsrvctl u:object_r:pvrsrvctl_exec:s0
 /system/xbin/BGW u:object_r:BGW_exec:s0
-/system/xbin/mnld u:object_r:mnld_exec:s0
-/system/bin/md_ctrl u:object_r:md_ctrl_exec:s0
+/(system|system\/vendor|vendor)/xbin/mnld                                                u:object_r:mnld_exec:s0
+/(system|system\/vendor|vendor)/bin/md_ctrl                                             u:object_r:md_ctrl_exec:s0
 /system/bin/cmddumper u:object_r:cmddumper_exec:s0
 /system/bin/epdg_wod u:object_r:epdg_wod_exec:s0
 /system/bin/ipsec u:object_r:ipsec_exec:s0
@@ -482,7 +482,7 @@
 /system/bin/starter u:object_r:starter_exec:s0
 /system/bin/stroke u:object_r:stroke_exec:s0
 /system/bin/istd8303 u:object_r:istd8303_exec:s0
-/system/bin/spm_loader u:object_r:spm_loader_exec:s0
+/(system|system\/vendor|vendor)/bin/spm_loader                  u:object_r:spm_loader_exec:s0
 /system/bin/vtservice u:object_r:vtservice_exec:s0
 /system/bin/hotknot_native_service u:object_r:hotknot_native_exec:s0
 /system/bin/pppd_btdun u:object_r:pppd_btdun_exec:s0
@@ -572,4 +572,6 @@
 /sys/devices/.*/queue/scheduler					u:object_r:perf_control_sysfs:s0
 /data/\.tp\.settings                                            u:object_r:thermal_manager_data_file:s0
 /data/fuelgauge_datalog.txt                                     u:object_r:fuelgauge_data_file:s0
-/sys/class/BOOT/BOOT/boot/boot_mode                             u:object_r:sysfs_bootmode:s0
+/sys/devices/virtual/BOOT/BOOT/boot/boot_mode                   u:object_r:sysfs_boot_mode:s0
+/sys/bus/platform/drivers/mem_bw_ctrl/concurrency_scenario      u:object_r:sysfs_membw:s0
+/sys/bus/platform/drivers/ddr_type/ddr_type                     u:object_r:sysfs_ddr_type:s0

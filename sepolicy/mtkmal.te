@@ -4,7 +4,7 @@
 # ==============================================
 # Type Declaration
 # ==============================================
-type mtkmal, domain;
+type mtkmal, domain, domain_deprecated;
 type mtkmal_exec, exec_type, file_type;
 
 # ==============================================
