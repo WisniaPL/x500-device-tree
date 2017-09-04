@@ -20,7 +20,7 @@ mediatek.wlan.ctia=0
 rild.libpath=mtk-ril.so
 rild.libargs=-d /dev/ttyC0
 #
-wifi.tethering.interface=ap0
+wifi.tethering.interface=wlan0
 #
 
 ro.opengles.version=196608
