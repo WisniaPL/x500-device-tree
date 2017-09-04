@@ -66,11 +66,11 @@
     <bool name="config_unplugTurnsOnScreen">true</bool>    
 
     <string-array name="config_tether_usb_regexs">
-        <item>rndis\\d</item>
+      <item>"rndis\\d"</item>
     </string-array>
 
     <string-array name="config_tether_wifi_regexs">
-        <item>ap\\d</item>
+         <item>"wlan0"</item>
     </string-array>
 
     <!-- List of regexpressions describing the interface (if any) that represent tetherable
