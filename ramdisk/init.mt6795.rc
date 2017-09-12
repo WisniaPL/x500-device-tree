@@ -7,7 +7,7 @@ import init.project.rc
 import init.mal.rc
 import init.trustonic.rc
 
-
+import init.ssd.rc
 import init.modem.rc	
 
 on late-fs
@@ -241,9 +241,10 @@ on post-fs-data
     chmod 0660 /dev/rtc0
 
     # M4U
-    mknod /dev/M4U_device c 188 0
-    chmod 0444 /dev/M4U_device
-    chown system media /dev/M4U_device
+    #insmod /system/lib/modules/m4u.ko
+    #mknod /dev/M4U_device c 188 0
+    #chmod 0444 /dev/M4U_device
+    #chown system media /dev/M4U_device
 
     #set mlock limit to infinate (for m4u operation)
     setrlimit 8 -1 -1
@@ -345,6 +346,7 @@ on post-fs-data
     chown media system /dev/Vcodec
 
     #MJC
+    #insmod /system/lib/modules/mjc_kernel_driver.ko
     #mknod /dev/MJC c 168 0
     chmod 0660 /dev/MJC
     chown media system /dev/MJC
@@ -474,7 +476,7 @@ on post-fs-data
     chmod 0660 /dev/mtk_disp_mgr
     chown system graphics /dev/mtk_disp_mgr
 
-    chmod 0660 /sys/devices/platform/mtk_disp_mgr.0/rgb
+chmod 0660 /sys/devices/platform/mtk_disp_mgr.0/rgb
     chown system system /sys/devices/platform/mtk_disp_mgr.0/rgb
 
     chmod 0660 /dev/mtkfb_vsync
@@ -547,6 +549,10 @@ on post-fs-data
     #mtk_sched
     chmod 0660 /dev/mtk_sched
     chown system media /dev/mtk_sched
+
+    # For 6572 Mali400MP1 GPU kernel driver
+    #chmod 666 /dev/ump
+    #chown system.graphics /dev/ump
 
     chmod 666 /dev/mali
     chown system graphics /dev/mali
@@ -1067,6 +1073,15 @@ service PPLAgent /system/bin/ppl_agent
     class main
     user system
     group system cache
+
+service vtservice /system/bin/vtservice
+    class main
+    socket soc_vt_tcv dgram 660 radio system
+    socket soc_vt_stk dgram 660 radio system
+    socket soc_vt_svc dgram 660 radio system
+    user system
+    group system camera graphics inet net_admin net_raw media sdcard_rw radio sdcard_r media_rw
+    ioprio rt 4
 
 service cmmb /system/bin/cmmbsp
     class main
