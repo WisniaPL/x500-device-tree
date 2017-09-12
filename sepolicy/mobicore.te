@@ -32,3 +32,6 @@ allow mobicore self:netlink_socket create_socket_perms;
 allow mobicore apk_data_file:dir write;
 allow mobicore mobicore_data_file:dir create;
 allow mobicore mobicore_data_file:file rw_file_perms;
+allow mobicore proc:file { read ioctl open getattr };
+allow mobicore property_socket:sock_file write;
+allow mobicore init:unix_stream_socket connectto;
