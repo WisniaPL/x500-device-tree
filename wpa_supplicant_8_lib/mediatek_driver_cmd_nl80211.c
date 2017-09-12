@@ -1358,7 +1358,7 @@ int wpa_driver_nl80211_driver_cmd(void *priv, char *cmd, char *buf,
 		return -1;
 	}
 
-	if (os_strcmp(bss->ifname, "ap0") == 0) {
+	if (os_strcmp(bss->ifname, "wlan0") == 0) { 
 		hapd = (struct hostapd_data *)(drv->ctx);
 	}
 	else {
