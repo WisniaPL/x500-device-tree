@@ -75,7 +75,6 @@ type mnld_data_file, file_type, data_file_type;
 type sysctl_socket, file_type;
 
 type backuprestore_socket, file_type;
-type nfc_socket, file_type;
 
 type protect_f_data_file, file_type, data_file_type;
 type protect_s_data_file, file_type, data_file_type;

@@ -320,10 +320,7 @@ on post-fs-data
 
     chmod 0666 /dev/exm0
 
-    #NFC
-    rm /data/mtknfc_server
-
-## Custom pos_fs area (END) 
+## Custom pos_fs area (END)
 #INTERNAL_END
 
     # Separate location for storing security policy files on data

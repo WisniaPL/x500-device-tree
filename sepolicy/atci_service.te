@@ -51,8 +51,6 @@ allow atci_service atci_data_file:sock_file write;
 allow atci_service misc2_device:chr_file { open read write };
 allow atci_service mmcblk0_block_device:blk_file { open read write };
 allow atci_service mt6605_device:chr_file { read write ioctl open getattr };
-allow atci_service nfc_socket:dir { write add_name remove_name search };
-allow atci_service nfc_socket:sock_file { create write unlink setattr };
 allow atci_service system_file:file execute_no_trans;
 
 allow atci_service self:capability { dac_read_search dac_override net_raw chown fsetid sys_nice net_admin fowner sys_admin };

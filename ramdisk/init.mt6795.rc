@@ -189,9 +189,6 @@ on post-fs-data
     mkdir /data/gps_mnl 0771 gps system
     mkdir /data/misc/gps 0770 gps system
 
-    # NFC
-    mkdir /data/nfc_socket 0771 nfc radio
-
 # -----------------------
 # Add by MTK
     # md32 boot

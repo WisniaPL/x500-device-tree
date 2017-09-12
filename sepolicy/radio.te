@@ -41,8 +41,6 @@ allow radio bt_int_adp_socket:sock_file write;
 allow radio guiext-server:binder { transfer call };
 allow radio persist_ril_prop:property_service set;
 allow radio mt6605_device:chr_file { read write ioctl open getattr };
-allow radio nfc_socket:dir { write add_name remove_name search };
-allow radio nfc_socket:sock_file { create write unlink setattr };
 allow radio system_prop:property_service set;
 
 # Date: wk14.40
@@ -171,12 +169,6 @@ allow radio mal_mfi_socket:sock_file write;
 # Purpose : for engineermode WFD IOT property
 allow radio media_wfd_prop:property_service set;
 allow radio surfaceflinger:fifo_file { read write };
-
-# Date : 2015/09/14
-# Operation : IT
-# Purpose : [NFC][NFC Service]
-# Purpose : Engineering mode need to get NFC Service
-allow radio nfc_service:service_manager find;
 
 # Date: 2015/9/23
 # Operation: Program binary service

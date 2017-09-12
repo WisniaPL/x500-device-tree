@@ -401,7 +401,6 @@ lib/libmtkshifter.so
 lib/libn3d3a.so
 lib/libnativecheck-jni.so
 lib/libnetutils.so
-lib/libnfc_ndef.so
 lib/libnvram.so
 lib/libnvram_daemon_callback.so
 lib/libnvram_platform.so
@@ -698,7 +697,6 @@ lib64/lib_unique_id.so
 lib64/libn3d3a.so
 lib64/libnativecheck-jni.so
 lib64/libnetutils.so
-lib64/libnfc_ndef.so
 lib64/libnvram.so
 lib64/libnvram_daemon_callback.so
 lib64/libnvram_platform.so
@@ -879,5 +877,3 @@ lib/libvsim-adaptor-client.so
 lib64/libserial_port.so
 lib64/libsec_mem.so
 lib64/libvsim-adaptor-client.so
-
-
