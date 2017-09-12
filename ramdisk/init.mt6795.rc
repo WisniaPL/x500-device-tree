@@ -242,9 +242,9 @@ on post-fs-data
 
     # M4U
     #insmod /system/lib/modules/m4u.ko
-    #mknod /dev/M4U_device c 188 0
-    #chmod 0444 /dev/M4U_device
-    #chown system media /dev/M4U_device
+    mknod /dev/M4U_device c 188 0
+    chmod 0444 /dev/M4U_device
+    chown system media /dev/M4U_device
 
     #set mlock limit to infinate (for m4u operation)
     setrlimit 8 -1 -1
