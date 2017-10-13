@@ -126,6 +126,10 @@ ifneq ($(TARGET_BUILD_VARIANT),user,userdebug,eng)
   ADDITIONAL_DEFAULT_PROPERTIES += ro.secure=1
 endif
 
+# SECCOMP 
+PRODUCT_COPY_FILES += \ 
+    $(LOCAL_PATH)/seccomp/mediacodec.policy:system/vendor/etc/seccomp_policy/mediacodec.policy 
+	
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/ramdisk/enableswap.sh:root/enableswap.sh \
     $(LOCAL_PATH)/ramdisk/factory_init.project.rc:root/factory_init.project.rc \
