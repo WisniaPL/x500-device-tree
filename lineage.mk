@@ -1,8 +1,8 @@
 # Inherit device configuration
 $(call inherit-product, $(LOCAL_PATH)/device.mk)
 
-# Inherit some common CM stuff.
-$(call inherit-product, vendor/cm/config/common_full_phone.mk)
+# Inherit Lineage's custom product configuration 
+$(call inherit-product, vendor/lineage/config/common_full_phone.mk) 
 
 # Device display
 TARGET_SCREEN_HEIGHT := 1920
