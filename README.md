@@ -1,7 +1,7 @@
-# Leeco 1s - LineageOS 14.1
+# Leeco 1s - Android Nougat Roms
 ==============
 
-This branch is device for building of the LineageOS 14.1.
+This branch is device for building of the Nougat roms.
 
 ---
 
@@ -48,9 +48,8 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 * Audio over BT
 
 ## Broken/Bugs
-* Camera
-* Flashlight (statusbar and camera)
-* ?????
+* Camera in low light
+* Youtube 1080p 60 fps
 
 ## DONATE
 
@@ -68,7 +67,7 @@ DeckerSU
 
 M.A.D
 
-Bule
-
 Danielhk
+
+Moyster
 
