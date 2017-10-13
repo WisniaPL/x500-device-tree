@@ -92,3 +92,6 @@ allow nvram_daemon msensor_device:chr_file r_file_perms;
 set_prop(nvram_daemon, nvram_prop)
 set_prop(nvram_daemon, wmt_prop) 
 allow nvram_daemon block_device:dir search;
+
+# boot_mode 
+allow nvram_daemon sysfs_boot_mode:file r_file_perms; 

@@ -264,7 +264,6 @@ allow system_server surfaceflinger:fifo_file rw_file_perms;
 # Operation : Migration
 allow system_server sw_sync_device:chr_file { read write getattr open ioctl };
 allow system_server wifi_data_file:sock_file { unlink };
-allow system_server wifi_data_file:sock_file { unlink };
 
 # Goodixfingerprintd
 binder_call(system_server,goodixfingerprintd)
@@ -283,3 +282,6 @@ allow system_server goodixfingerprintd_device:chr_file rw_file_perms;
 
 # Persist
 allow system_server protect_s_data_file:dir r_dir_perms;
+
+# dev_info 
+allow system_server sysfs_devinfo:file r_file_perms; 

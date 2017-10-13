@@ -272,4 +272,5 @@ allow platform_app goodixfingerprintd_device:chr_file rw_file_perms;
 allow platform_app goodixfingerprintd:binder { call transfer };
 allow platform_app mobicore_device:chr_file rw_file_perms;
 
-
+# dev_info 
+allow platform_app sysfs_devinfo:file r_file_perms;

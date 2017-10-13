@@ -55,3 +55,6 @@ allow bootanim rootfs:lnk_file { getattr };
 # Purpose : RGX 1.5 DDK requires client to have fifo permission
 allow bootanim surfaceflinger:fifo_file rw_file_perms;
 
+# dev_info 
+allow bootanim sysfs_devinfo:file r_file_perms; 
+

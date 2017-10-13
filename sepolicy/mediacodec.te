@@ -19,11 +19,15 @@ allow mediacodec devmap_device:chr_file r_file_perms;
 allow mediacodec devmap_device:chr_file { ioctl };
 allow mediacodec sysfs_devinfo:file { open read write };
 
+# omx 
+allow mediacodec sysfs_ddr_type:file r_file_perms; 
+allow mediacodec sysfs_membw:file { open rw_file_perms }; 
+
 # M4U
 allow mediacodec M4U_device_device:chr_file rw_file_perms;
 
 #bootmode
-allow mediacodec sysfs_boot_mode:file r_file_perms;
+allow mediacodec sysfs_boot_mode:file rw_file_perms;
 
 # proc/meminfo
 allow mediacodec proc_meminfo:file { getattr open read };

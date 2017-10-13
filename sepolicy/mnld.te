@@ -70,3 +70,6 @@ allow mnld proc_lk_env:file rw_file_perms;
 allow mnld wmt_prop:file r_file_perms;
 allow mnld rootfs:lnk_file { getattr };
 
+# boot_mode 
+allow mnld sysfs_boot_mode:file r_file_perms;
+

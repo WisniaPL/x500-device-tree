@@ -24,3 +24,6 @@ allow bluetooth platform_app_tmpfs:file write;
 # Purpose: Allow bluetooth to access surfaceflinger
 allow bluetooth surfaceflinger:fifo_file { read write };
 allow bluetooth bt_prop:file { getattr open read }; 
+
+# boot_mode 
+allow bluetooth sysfs_boot_mode:file r_file_perms; 
