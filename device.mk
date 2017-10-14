@@ -377,3 +377,7 @@ PRODUCT_PACKAGES += \
     Stk
 
 
+
+# GPS force mode
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.force.gps.mode=gnss
