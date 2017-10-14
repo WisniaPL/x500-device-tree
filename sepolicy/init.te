@@ -69,9 +69,9 @@ allow init tmpfs:lnk_file { create unlink };
 # Date : WK15.32
 # Operation : Migration
 # Purpose : disable AT_SECURE for LD_PRELOAD
-userdebug_or_eng(`
-  allow init { domain -lmkd }:process noatsecure;
-')
+#userdebug_or_eng(`
+#  allow init { domain -lmkd }:process noatsecure;
+#')
 
 # Date : WK15.33
 # Operation : Migration

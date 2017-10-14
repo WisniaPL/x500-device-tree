@@ -29,3 +29,31 @@ allow ccci_mdinit mdlog_data_file:dir r_dir_perms;
 # boot_mode 
 allow ccci_mdinit sysfs_boot_mode:file r_file_perms; 
 
+
+allow ccci_mdinit preloader_device:chr_file rw_file_perms;
+allow ccci_mdinit misc_sd_device:chr_file { read open };
+allow ccci_mdinit sec_ro_device:chr_file { read open };
+
+allow ccci_mdinit custom_file:dir { search };
+allow ccci_mdinit custom_file:file { open read getattr };
+allow ccci_mdinit mtk_tele_prop:property_service set;
+
+# Date WK15.13
+# Operation : Migration
+# Purpose : for nand partition access
+allow ccci_mdinit mtd_device:dir search;
+allow ccci_mdinit mtd_device:chr_file { read write open };
+
+# Date : WK15.30
+# Operation : Migration
+# Purpose : for device bring up, not to block early migration/sanity
+allow ccci_mdinit proc_lk_env:file rw_file_perms;
+
+# Nougat
+allow ccci_mdinit sysfs:file { write read open };
+allow ccci_mdinit proc:file { read open ioctl };
+allow ccci_mdinit persist_ril_prop:file { read open getattr };
+allow ccci_mdinit mediatek_prop:file { read open getattr ioctl };
+allow ccci_mdinit mtk_md_prop:file { read open getattr ioctl };
+#allow ccci_mdinit block_device:blk_file r_file_perms;
+allow ccci_mdinit rootfs:lnk_file { getattr };

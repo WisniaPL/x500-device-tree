@@ -43,13 +43,13 @@ allow system_server mnld:unix_dgram_socket sendto;
 # Date : WK14.34
 # Operation : Migration
 # Purpose : for debug
-allow system_server debuggerd:fd use;
+#allow system_server debuggerd:fd use;
 allow system_server mnld_data_file:sock_file create_file_perms;
 allow system_server mnld_data_file:sock_file rw_file_perms;
 allow system_server mnld_data_file:dir create_file_perms;
 allow system_server mnld_data_file:dir rw_dir_perms;
-allow system_server gps_data_file:file create_file_perms;
-allow system_server gps_data_file:dir rw_dir_perms;
+#allow system_server gps_data_file:file create_file_perms;
+#allow system_server gps_data_file:dir rw_dir_perms;
 
 # Date : WK14.37
 # Operation : Migration
@@ -65,7 +65,7 @@ allow system_server anr_data_file:file relabelto;
 # Date : WK14.38
 # Operation : Migration
 # Purpose : for debug
-allow system_server debuggerd:binder call;
+#allow system_server debuggerd:binder call;
 allow system_server resmon:fd use;
 allow system_server resmon:fifo_file write;
 
@@ -270,18 +270,8 @@ binder_call(system_server,goodixfingerprintd)
 allow system_server McDriverDaemon_device:chr_file rw_file_perms;
 allow system_server tee_device:chr_file r_file_perms;
 allow system_server goodixfingerprintd_device:chr_file rw_file_perms;
-
-# RGB Display Color
-#allow system_server display_color_sysfs:file rw_file_perms;
-
-# Fast Charge
-#allow system_server fast_charge_sysfs:file rw_file_perms;
-
-# Smart Wake
-#allow system_server smartwake_sysfs:file rw_file_perms;
-
-# Persist
-allow system_server protect_s_data_file:dir r_dir_perms;
+# Nougat
+allow system_server dalvikcache_data_file:file execute;
 
 # dev_info 
 allow system_server sysfs_devinfo:file r_file_perms; 
