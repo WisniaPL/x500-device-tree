@@ -118,7 +118,6 @@ libext2_blkid \
     libext2_uuid_static  \
     superumount 
     
-PRODUCT_TAGS += dalvik.gc.type-precise
 PRODUCT_BUILD_PROP_OVERRIDES += BUILD_UTC_DATE=0
 # Var patch
 ifneq ($(TARGET_BUILD_VARIANT),user,userdebug,eng)
@@ -277,7 +276,10 @@ PRODUCT_COPY_FILES += \
 # MTK Helpers 
 PRODUCT_PACKAGES += \
    libccci_util   \
-   libmtk_symbols
+   librilmtk  \
+   mtkrild  \
+   libmtk_symbols \
+  libiodev 
 
 # Sensor Calibration
 PRODUCT_PACKAGES += libem_sensor_jni
@@ -308,7 +310,4 @@ PRODUCT_PACKAGES += \
     EngineerMode  \
     libm4u  \
     libbwc  \
-ResurrectionOTA 
-
-# Include explicitly to work around Facelock issues
-PRODUCT_PACKAGES += libprotobuf-cpp-full
+ResurrectionOTA
