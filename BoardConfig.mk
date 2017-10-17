@@ -237,7 +237,7 @@ TARGET_BOOTANIMATION_HALF_RES := true
 # This is needed for us as it disables tcache, which is breaking camera.
 MALLOC_SVELTE := true
 BOARD_GLOBAL_CFLAGS += -DDECAY_TIME_DEFAULT=0
-BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
+#BOARD_GLOBAL_CFLAGS += -DBATTERY_REAL_INFO
 #Hack for prebuilt kernel
 ifeq ($(TARGET_DEVICE),X3)
 $(shell mkdir -p $(OUT)/obj/KERNEL_OBJ/usr)
