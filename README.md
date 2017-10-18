@@ -29,43 +29,17 @@ Camera  | Primary: 13 MP, Secondary: 5 MP
 # Build Information
 
 ## Working
-* Adjustable brightness
-* Audio
-* Auto brightness
-* MTP and Mass Storage modes
-* Vibration
-* Rotation
-* RIL
-* Video
-* Gallery
-* Fingerprint
-* Mic
-* Wi-Fi
-* Bluetooth
-* Internet
-* GPS
-* IR
-* Audio over BT
+???
 
 ## Broken/Bugs
-* Camera in low light
-* Youtube 1080p 60 fps
+???
 
 ## DONATE
 
 https://www.paypal.me/Wisniabdg
 
-## DOWNLOADS
-
-LineageOS14 http://forum.le.com/in/index.php?threads/lineageos-14-1-leeco-1s.18742/
-
-RR http://forum.le.com/in/index.php?threads/resurrection-remix-5-8-2-beta-android-7-1-1.18768/
 
 ## THANKS TO:
-
-DeckerSU
-
-M.A.D
 
 Danielhk
 
